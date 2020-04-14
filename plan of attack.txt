@@ -1,0 +1,96 @@
+﻿CS246 A5 Plan of Attack
+
+
+Design a Chess Game using Object Oriented Principle
+ 
+Main classes needed for a Chess game:
+-           Piece:
+The piece class is an abstract class with fields containing its basic information: coordinate (indicate its location on the board), side (indicates its color), type (can either be King, Queen, Knight, Bishop, Rook, Pawn).
+Class function:
+1.         Determine if a move is legal in terms of its piece type.
+2.         Determine the preferred move for a CPU player in terms of the difficulty level
+Its children (King, Queen, Knight, Bishop, Rook, Pawn) implements the abstract operations.
+-           Board:
+Board is an 8*8 grid with pieces on spots corresponding to their coordinates.
+Class function:
+1.         Set up user’s own initial board
+2.         Exit the set-up mode,
+3.         Reset the board with the auto staring position
+4.         Print the board
+5.         Move the piece when the move is legal
+6.         Complete the pawn promotion when it’s needed
+7.         Determine the board status (White In Check, Black In Check, White In Checkmate, Black In Checkmate, Stalemate, other) before and after the move
+8.         Make the preferred move for the CPU player in terms of the difficulty level
+-           Scoreboard:
+The scoreboard keeps track of points from both white and black sides. A win awards one point to the winner side and zero to the loser. A draw awards half point to each side. When the game ends, it will print the final score to the screen.
+-           Player:
+Player class is an abstract class that represents the participants playing the game.
+Class function:
+1.         Take the board as a parameter to move the pieces
+Its children (Human and Computer) represent the players of the game. Human players will manually input their move while Computer players analyze the board and make a move based on their difficulty level.
+-           Game:
+The Game class controls the flow of this game. It keeps track of all the moves, which player has the current move and prints the final result on the screen
+
+
+Planned Schedule:
+ 
+Parts of the project
+	The partner that’s responsible
+	Estimated completed date
+	Implement necessary Enumeration classes
+	Stef
+	April 13
+	Implement Player and Human classes
+	Leslie
+	April 13
+	Implement Piece class and its children (without castling, en passant, and CPU movement)
+	Sakin
+	April 14
+	Implement Scoreboard class
+	 Leslie
+	April 14
+	Implement Game class
+	 Sakin
+	April 15
+	Implement Board class (without CPU movement)
+	 Stef
+	April 16
+	Implement Computer class and necessary CPU movement functions for level 1
+	Leslie
+	April 16
+	Implement castling and en passant in necessary Piece classes
+	Sakin
+	April 16
+	Implement CPU movement functions for level 2 and 3 (4 if possible)
+	Stef
+	April 17
+	Final testing and bug fixes
+	 Everyone
+	April 18
+	Extra credit
+	Everyone
+	April 20
+	 
+Answer and questions:
+
+
+Question:
+Chess programs usually come with a book of standard opening move sequences, which list accepted opening moves and responses to opponents’ moves, for the first dozen or so moves of the game. Although you are not required to support this, discuss how you would implement a book of standard openings if required.
+Answer:
+Under each concrete Piece class, we implement a function that gets all possible legal moves for that piece.
+Then we can create a list of moves that contains all the legal moves the user can make in each turn.
+In the first turn, we can randomly choose a certain number of moves shown on the screen as standard opening moves.
+In the following turns, we create the list every time which only contains the moves that help to capture the opponent’s piece or avoid capture. Then we choose a certain number of moves shown on the screen as a suggestion for the user.
+ 
+Question:
+How would you implement a feature that would allow a player to undo his/her last move? What about unlimited number of undos?
+Answer:
+For each player, we create a list of moves under its class which contains all the moves it has done and a list of pieces that it has killed. If one player wants to undo its last move, we choose to undo the last move for both players or just one player by checking the current turn of the player.
+To undo its last move, we move the piece from its current location back to its last location. And if its last killed piece’s location is equal to the current location, we put the killed piece back to that location.
+If the list of moves is empty, we print the error message on the screen: no moves left to undo.
+ 
+ 
+Question:
+Variations on chess abound. For example, four-handed chess is a variant that is played by four players (search for it!). Outline the changes that would be necessary to make your program into a four-handed chess game.
+Answer:
+Board will be changed to a standard 8*8 squares with additional 3 rows of 8 cells extending from each side. Therefore the way to set up the board, reset the board and print the board are all changed accordingly. Furthermore, the game class is changed to keep track of turns in 4 players instead of 2. The Scoreboard is changed to track 4 player’s scores.
