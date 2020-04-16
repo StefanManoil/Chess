@@ -5,9 +5,12 @@ Piecetype Queen::getType() {
 }
 
 std::vector<std::pair<int,int>> Queen::getMoves() {
-    std::vector<std::pair<int,int>> moves;
+    std::vector<std::pair<int,int>> straights = getStraightMoves();
+    std::vector<std::pair<int,int>> diagonals = getDiagonalMoves();
 
-    //get moves for queen in moves
-
-    return moves;
+    for(auto move: diagonals) {
+        straights.emplace_back(move);
+    }
+    
+    return straights;
 }

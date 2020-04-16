@@ -11,6 +11,9 @@ class Piece {
     protected:
         std::pair<int,int> coordinates;
         bool hasMoved;
+        virtual std::vector<std::pair<int,int>> getStraightMoves();
+        virtual std::vector<std::pair<int,int>> getDiagonalMoves();
+        bool validCoordinate(std::pair<int,int>);
     public:
         Side side;
         Piece(std::pair<int,int> coordinates, Side side) : coordinates{coordinates}, hasMoved{false}, side{side} {};
