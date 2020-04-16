@@ -1,6 +1,6 @@
 #include "Game.h"
 
-void Game::startGame() {
+void Game::start() {
     std::string input;
     while (std::cin >> input) {
         if (input == "move") {
