@@ -21,7 +21,7 @@ class Game {
             delete white;
             delete black;
         }
-        void startGame();
+        void start();
 };
 
 #endif
