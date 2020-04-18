@@ -35,6 +35,7 @@ class Board {
         // board status checks
         BoardStatus getStatus();
         BoardStatus getStatusUponMove(std::pair<int, int> currentPos, std::pair<int, int> destPos);
+        // ^ not sure if getStatus should have side yet or not
 };
 
 #endif
