@@ -4,6 +4,7 @@
 #include <vector>
 #include <iostream>
 #include "Boardstatus.h"
+#include "pieces/Piecetype.h"
 #include "pieces/Piece.h"
 #include "pieces/Bishop.h"
 #include "pieces/King.h"
