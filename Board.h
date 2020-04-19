@@ -17,6 +17,7 @@ class Board {
     private:
         std::vector<std::vector<Piece*>> pieces;
         bool inSetupMode = false;
+        bool gameInProgress;
     public:
         Board();
         // void methods
