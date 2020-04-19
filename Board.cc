@@ -86,3 +86,8 @@ void Board::removePieceInSetup(std::pair<int , int> location) {
         std::cout << "You are not in Setup mode." << std::endl;
     }
 }
+
+void Board::exitSetup() {
+    // instead of iterating through the whole board we can just iterate through the pieces
+    // and check for more than 1 king, side in check , etc
+}
