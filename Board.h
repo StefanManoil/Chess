@@ -2,6 +2,8 @@
 #define _BOARD_H_
 
 #include <vector>
+#include <set>
+#include <map>
 #include <iostream>
 #include "Boardstatus.h"
 #include "pieces/Piecetype.h"
@@ -16,6 +18,7 @@
 class Board {
     private:
         std::vector<std::vector<Piece*>> pieces;
+        std::vector<Piece*> actualPieces;
         bool inSetupMode = false;
         bool gameInProgress;
     public:
