@@ -19,6 +19,7 @@ class Board {
     private:
         std::vector<std::vector<Piece*>> pieces;
         std::vector<Piece*> actualPieces;
+        std::map<std::pair<int, int>, Piece*> actualPosOfPieces;
         bool inSetupMode = false;
         bool gameInProgress;
     public:
@@ -38,6 +39,7 @@ class Board {
         bool pieceAtPosMoved(std::pair<int, int> currentPos);
         bool capturable(std::pair<int, int> pos, Side side);
         // board status checks
+        BoardStatus getStatusBasic();
         BoardStatus getStatus();
         BoardStatus getStatusUponMove(std::pair<int, int> currentPos, std::pair<int, int> destPos);
         // ^ not sure if getStatus should have side yet or not
