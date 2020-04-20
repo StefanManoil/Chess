@@ -5,7 +5,7 @@ void Game::start() {
     while (std::cin >> input) {
         if (input == "move") {
             if (currentSide == Side::White) {
-                if (white->playMove(board)) {
+                if (white->player_move(board)) {
                     currentSide = Side::Black;
                 }
                 else {
@@ -14,7 +14,7 @@ void Game::start() {
                 }
             }
             else if (currentSide == Side::Black) {
-                if (black->playMove(board)) {
+                if (black->player_move(board)) {
                     currentSide = Side::White;
                 }
                 else {

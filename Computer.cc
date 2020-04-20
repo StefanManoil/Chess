@@ -1,12 +1,12 @@
-#include "cpuplayer.h"
+#include "Computer.h"
 using namespace std;
 
-CPUPlayer::CPUPlayer(side, diff_level): Player(side), diff_level{diff_level} {}
+Computer::Computer(Side side, int diff_level): Player(side), diff_level{diff_level} {}
 
 
-CPUPlayer::~CPUPlayer() {}
+Computer::~Computer() {}
 
 
-bool CPUPlayer::player_move(Board *board) {
+bool Computer::player_move(Board *board) {
     return board->CPUmove(side, diff_level);
 }

@@ -1,13 +1,12 @@
 #ifndef _BOARD_H_
 #define _BOARD_H_
 
+#include "pieces/Piece.h"
 #include <vector>
 #include <set>
 #include <map>
 #include <iostream>
 #include "Boardstatus.h"
-#include "pieces/Piecetype.h"
-#include "pieces/Piece.h"
 #include "pieces/Bishop.h"
 #include "pieces/King.h"
 #include "pieces/Knight.h"
@@ -24,6 +23,7 @@ class Board {
         bool gameInProgress;
     public:
         Board();
+        bool inSetup();
         // void methods
         void setPieceInSetup(std::pair<int, int> pos, Side side, Piecetype piecetype);
         void removePieceInSetup(std::pair<int , int> location);

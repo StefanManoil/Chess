@@ -1,13 +1,16 @@
-#ifndef CPUPLAYER_H
-#define CPUPLAYER_H
+#ifndef _COMPUTER_H
+#define _COMPUTER_H
+
+#include "Side.h"
+#include "Board.h"
 #include "player.h"
 
-class CPUPlayer: public Player {
+class Computer: public Player {
     int diff_level;
-    public;
-    CPUPlayer(side, diff_level);
-    ~CPUPlayer();
-    bool player_move(Board *board) override;
+    public:
+        Computer(Side side, int diff_level);
+        ~Computer();
+        bool player_move(Board *board) override;
 };
 
 #endif

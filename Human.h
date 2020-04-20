@@ -1,13 +1,17 @@
-#ifndef HUMANPLAYER_H
-#define HUMANPLAYER_H
-#include "player.h"
-#include <sstream>
-using namespace std;
+#ifndef _HUMAN_H
+#define _HUMAN_H
 
-class HumanPlayer: public Player {
+#include "Side.h"
+#include "Board.h"
+#include "player.h"
+#include "conversion.h"
+#include <sstream>
+#include <string>
+
+class Human: public Player {
 public:
-    HumanPlayer(Side side);
-    ~HumanPlayer();
+    Human(Side side);
+    ~Human();
     bool player_move(Board *board) override;
 };
 

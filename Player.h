@@ -1,10 +1,10 @@
-#ifndef PLAYER_H
-#define PLAYER_H
-#include "board.h"
+#ifndef _PLAYER_H
+#define _PLAYER_H
+
+#include "Side.h"
+#include "Board.h"
+#include "Piecetype.h"
 #include "conversion.h"
-#include <string>
-#include <iostream>
-using namespace std;
 
 class Player{
 public:

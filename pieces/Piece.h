@@ -1,12 +1,10 @@
 #ifndef _PIECE_H_
 #define _PIECE_H_
 
-#include "../Side.h"
-#include "Piecetype.h"
 #include <string>
 #include <vector>
-#include "../Board.h"
-
+#include "Piecetype.h"
+#include "../Side.h"
 
 class Piece {
     protected:

@@ -1,12 +1,11 @@
 #ifndef _GAME_H_
 #define _GAME_H_
 
-#include "Board.h"
 #include "Player.h"
+#include "Board.h"
 #include "Scoreboard.h"
-//include "Boardstatus.h"
+#include "Boardstatus.h"
 #include "Side.h"
-#include <iostream>
 
 class Game {
     Board* board;

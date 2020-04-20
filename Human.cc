@@ -1,13 +1,13 @@
-#include "humanplayer.h"
+#include "Human.h"
 using namespace std;
 
-HumanPlayer::HumanPlayer(Side side): Player(side) {}
+Human::Human(Side side): Player(side) {}
 
 
-HumanPlayer::~HumanPlayer() {}
+Human::~Human() {}
 
 
-bool HumanPlayer::player_move(Board *board) override{
+bool Human::player_move(Board *board) {
     // read in staring and ending coordinates
     string line;
     getline(cin, line);
@@ -20,9 +20,9 @@ bool HumanPlayer::player_move(Board *board) override{
         try{
             pair<int, int> coordinate1 = Conversion::toCoordinate(move_from);
             pair<int, int> coordinate2 = Conversion::toCoordinate(move_to);
-            catch (const string *msg){
-                return false;
-            }
+        }
+        catch (const string *msg){
+            return false;
         }
 
         string pawn_promote;
@@ -30,9 +30,9 @@ bool HumanPlayer::player_move(Board *board) override{
             // convert string to piece type
             try{
                 Piecetype type = Conversion::toType(pawn_promote);
-                catch (const string *msg) {
-                    return false;
-                }
+            }
+            catch (const string *msg) {
+                return false;
             }
 
             return board->PawnPromotion(coordinate2, type, side);

@@ -1,17 +1,11 @@
-//These shouldn't be necessary includes for the final product, have them here for testing purposes
-#include "pieces/Piece.h"
-#include "pieces/Pawn.h"
-#include "pieces/Bishop.h"
-#include "pieces/Knight.h"
-#include "pieces/Rook.h"
-#include "pieces/King.h"
-#include "pieces/Queen.h"
-//
-
 #include "Scoreboard.h"
-#include "Board.h"
 #include "Game.h"
+#include "Board.h"
 #include "Player.h"
+#include "Human.h"
+#include "Computer.h"
+#include "Piecetype.h"
+#include "conversion.h"
 #include <string>
 #include <iostream>
 
@@ -19,7 +13,7 @@ int main() {
     std::cout << "Main" << std::endl;
     Scoreboard* score = new Scoreboard();
     Board* board = new Board();
-    Game* game = new Game();
+    Game* game;
     Side first = Side::White;
 
     std::string input;
@@ -56,7 +50,7 @@ int main() {
             std::string colour;
             std::cin >> colour;
 
-            if (board->isInSetup()) {
+            if (board->inSetup()) {
                 if (colour == "black") {
                     first = Side::Black;
                 }
@@ -73,7 +67,7 @@ int main() {
             std::string p2;
             std::cin >> p1 >> p2;
 
-            if (board->isInSetup()) {
+            if (board->inSetup()) {
                 std::cout << "Can't start game in setup mode. Please exit setup mode first" << std::endl;
                 continue;
             }
@@ -118,14 +112,14 @@ int main() {
             game = new Game(board, score, whitePlayer, blackPlayer, first);
             board->print();
             game->start();
-            board->reset();
+            board->resetBoard();
         }
         else {
             std::cout << "Invalid command" << std::endl;
             continue;
         }
     }
-    score->print();
+    score->printScore();
     if (game != nullptr) {
         delete game;
     }

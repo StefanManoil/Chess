@@ -1,15 +1,15 @@
-#ifndef SCOREBOARD_H
-#define SCOREBOARD_H
+#ifndef _SCORE_BOARD_H
+#define _SCORE_BOARD_H
 
-#include "side.h"
+#include "Side.h"
 #include <iostream>
 using namespace std;
 
-class ScoreBoard{
+class Scoreboard{
     float white_score;
     float black_score;
 public:
-    ScoreBoard();
+    Scoreboard();
     void printScore();
     void winScore(Side winner);
     void stalemate();

@@ -1,5 +1,9 @@
 #include "Board.h"
 
+bool Board::inSetup() {
+    return this->inSetupMode;
+}
+
 Piecetype Board::getTypeOfPiece(std::pair<int, int> location) {
   /*Piece *p = this->pieces.at(location.first).at(location.second);
   if (p) {
@@ -57,7 +61,7 @@ bool Board::pieceAtPosMoved(std::pair<int,int> location) {
   }
   return false;  // or return true not sure */
   if (this->actualPosOfPieces.count(location) > 0) {
-      return this->actualPosOfPieces.at(location)->pieceMoved();
+      return this->actualPosOfPieces.at(location)->hasMoved();
   }
   return false;
 }
@@ -463,7 +467,7 @@ BoardStatus Board::getStatusBasic() {
     for (const auto& posPiecePairBlacks : mapOfBlackPieces) {
         if (posPiecePairBlacks.second->getType() == Piecetype::King) {
             for (const auto& posPiecePairWhites : mapOfWhitePieces) {
-                for (int i = 0; i < posPiecePairWhites.second->getMoves().size(); i++) {
+                for (int i = 0; i < posPiecePairWhites.second->getMoves(*this).size(); i++) {
                     if (posPiecePairWhites.second->getMoves.at(i) == posPiecePairBlacks.first) {
                         return BoardStatus::BlackCheck;
                     }
@@ -474,7 +478,7 @@ BoardStatus Board::getStatusBasic() {
     for (const auto& posPiecePairWhites : mapOfWhitePieces) {
         if (posPiecePairWhites.second->getType() == Piecetype::King) {
             for (const auto& posPiecePairBlacks : mapOfBlackPieces) {
-                for (int i = 0; i < posPiecePairBlacks.second->getMoves().size(); i++) {
+                for (int i = 0; i < posPiecePairBlacks.second->getMoves(*this).size(); i++) {
                     if (posPiecePairBlacks.second->getMoves.at(i) == posPiecePairWhites.first) {
                         return BoardStatus::WhiteCheck;
                     }
@@ -482,7 +486,7 @@ BoardStatus Board::getStatusBasic() {
             }
         }
     }
-    return BoardStatus::Default;
+    return BoardStatus::Normal;
 }
 
 void Board::resetBoard() {
