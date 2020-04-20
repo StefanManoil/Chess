@@ -4,14 +4,6 @@ Piecetype Rook::getType() {
     return Piecetype::Rook;
 }
 
-std::vector<std::pair<int,int>> Rook::getMoves() {
-    /* 
-     *
-     * 
-     * add castling move
-     * 
-     * 
-     */
-    
-    return getStraightMoves();
+std::vector<std::pair<int,int>> Rook::getMoves(Board board) {    
+    return getStraightMoves(board);
 }

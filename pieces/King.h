@@ -8,7 +8,7 @@
 class King: public Piece {
     King(std::pair<int,int> coordinates, Side side): Piece{coordinates, side} {};
     Piecetype getType();
-    std::vector<std::pair<int,int>> getMoves();
+    std::vector<std::pair<int,int>> getMoves(Board board);
 };
 
 #endif
