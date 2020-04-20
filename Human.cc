@@ -35,7 +35,7 @@ bool HumanPlayer::player_move(Board *board) override{
                 }
             }
 
-            return board->PawnPromotion(coordinate1, coordinate2, type, side);
+            return board->PawnPromotion(coordinate2, type, side);
         }
         return board->movePiece(coordinate1, coordinate2, side);
     }
