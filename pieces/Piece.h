@@ -18,7 +18,7 @@ class Piece {
         Side side;
         Piece(std::pair<int,int> coordinates, Side side) : coordinates{coordinates}, moved{false}, side{side} {};
         virtual ~Piece() {};
-        virtual std::vector<std::pair<int,int>> getMoves() = 0;
+        virtual std::vector<std::pair<int,int>> getMoves(Board board) = 0;
         virtual Piecetype getType() = 0;
         std::string toString();
         std::pair<int,int> getCoordinates();
