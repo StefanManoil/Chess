@@ -8,9 +8,9 @@ bool Piece::hasMoved() {
     return this->moved;
 }
 
-bool Piece::checkMove(Board board, std::pair<int,int> move) {
+bool Piece::checkMove(Board *board, std::pair<int,int> move) {
     if ((move.first > 0 && move.first < 7) && (move.second > 0 && move.second < 7)) {
-        Side pieceAtMove = board.getSideOfPiece(move);
+        Side pieceAtMove = board->getSideOfPiece(move);
         if (this->side != pieceAtMove) {
             return true;
         }
@@ -18,7 +18,7 @@ bool Piece::checkMove(Board board, std::pair<int,int> move) {
     return false;
 }
 
-std::vector<std::pair<int,int>> Piece::getStraightMoves(Board board) {
+std::vector<std::pair<int,int>> Piece::getStraightMoves(Board *board) {
     std::vector<std::pair<int,int>> moves;
     std::pair<int,int> move;
 

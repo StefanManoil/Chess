@@ -4,7 +4,7 @@ Piecetype King::getType() {
     return Piecetype::King;
 }
 
-std::vector<std::pair<int,int>> King::getMoves(Board board) {
+std::vector<std::pair<int,int>> King::getMoves(Board *board) {
     std::vector<std::pair<int,int>> moves;
     std::pair<int,int> move;
 

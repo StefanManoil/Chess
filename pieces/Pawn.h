@@ -7,7 +7,7 @@ class Pawn: public Piece {
     public:
         Pawn(std::pair<int,int> coordinates, Side side): Piece(coordinates, side) {};
         Piecetype getType() override;
-        std::vector<std::pair<int,int>> getMoves(Board board) override;
+        std::vector<std::pair<int,int>> getMoves(Board *board) override;
 };
 
 #endif

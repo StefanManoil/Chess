@@ -4,7 +4,7 @@ Piecetype Pawn::getType() {
     return Piecetype::Pawn;
 }
 
-std::vector<std::pair<int,int>> Pawn::getMoves(Board board) {
+std::vector<std::pair<int,int>> Pawn::getMoves(Board *board) {
     std::vector<std::pair<int,int>> moves;
     std::pair<int,int> move;
 
@@ -31,7 +31,7 @@ std::vector<std::pair<int,int>> Pawn::getMoves(Board board) {
         //Black moving forward and right
         move = std::make_pair(x+1, y+1);
         if (checkMove(board, move)) {
-            if (board.getSideOfPiece(move) != Side::None) {
+            if (board->getSideOfPiece(move) != Side::None) {
                 moves.emplace_back(move);
             }
         }
@@ -39,7 +39,7 @@ std::vector<std::pair<int,int>> Pawn::getMoves(Board board) {
         //Black moving forward and left
         move = std::make_pair(x-1, y+1);
         if (checkMove(board, move)) {
-            if (board.getSideOfPiece(move) != Side::None) {
+            if (board->getSideOfPiece(move) != Side::None) {
                 moves.emplace_back(move);
             }
         }
@@ -62,7 +62,7 @@ std::vector<std::pair<int,int>> Pawn::getMoves(Board board) {
         //White moving forward and right
         move = std::make_pair(x+1, y-1);
         if (checkMove(board, move)) {
-            if (board.getSideOfPiece(move) != Side::None) {
+            if (board->getSideOfPiece(move) != Side::None) {
                 moves.emplace_back(move);
             }
         }
@@ -70,7 +70,7 @@ std::vector<std::pair<int,int>> Pawn::getMoves(Board board) {
         //White moving forward and left
         move = std::make_pair(x-1, y-1);
         if (checkMove(board, move)) {
-            if (board.getSideOfPiece(move) != Side::None) {
+            if (board->getSideOfPiece(move) != Side::None) {
                 moves.emplace_back(move);
             }
         }

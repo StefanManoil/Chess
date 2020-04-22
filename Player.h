@@ -3,7 +3,7 @@
 
 #include "Side.h"
 #include "Board.h"
-#include "Piecetype.h"
+#include "pieces/Piecetype.h"
 #include "conversion.h"
 
 class Player{
