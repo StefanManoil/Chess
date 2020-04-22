@@ -8,14 +8,14 @@
 #include <map>
 #include <iostream>
 #include "Boardstatus.h"
+#include "pieces/Piecetype.h"
+#include "pieces/Piece.h"
 #include "pieces/Bishop.h"
 #include "pieces/King.h"
 #include "pieces/Knight.h"
 #include "pieces/Pawn.h"
 #include "pieces/Queen.h"
 #include "pieces/Rook.h"
-
-class Piece;
 
 class Board {
     private:
@@ -32,11 +32,20 @@ class Board {
         // maybes
         std::string invalidMoveMessageIfNeeded;
         BoardStatus currentBoardStatus = BoardStatus::Normal;
+        // methods
+        bool canKingInCheckMoveToSafePos(Side currentSide);
+        bool canFriendlyPiecesBlockEnemyPieces(Side currentSide);
+        bool canFriendlyPiecesDestroyEnemyAttackingKing(Side currentSide);
+        bool doesSideHaveMovesLeft(Side currentSide);
+        bool willMoveRenderSideInCheck(Side currentSide, std::pair<int, int> currentPos, std::pair<int, int> destPos);
+        bool isValidCurrentPos(std::pair<int, int> currentPos, Side currentSide);
+        bool isValidDestPos(std::pair<int, int> destPos, Side currentSide);
+        bool isCapturingMove(std::pair<int, int> destPos, Side currentSide);
+        void captureMove(std::pair<int, int> currentPos, std::pair<int, int> destPos, Side currentSide);
+        void emptyMove(std::pair<int, int> currentPos, std::pair<int, int> destPos, Side currentSide);
+        bool canSideCaptureDestPos(std::pair<int, int> destPos, Side currentSide);
     public:
-        Board() {
-            resetBoard();
-        };
-        bool inSetup();
+        Board();
         // void methods
         void setPieceInSetup(std::pair<int, int> pos, Side side, Piecetype piecetype);
         void removePieceInSetup(std::pair<int , int> location);
@@ -50,14 +59,11 @@ class Board {
         // player move logic
         //bool canMovePiece(std::pair<int, int> currentPos);
         bool pieceAtPosMoved(std::pair<int, int> currentPos);
-        bool canSideCaptureDestPos(std::pair<int, int> destPos, Side currentSide);
+        bool isCapturingMove(std::pair<int, int> currentPos, std::pair<int, int> destPos, Side currentSide);
         //
         bool canPieceMoveToDestPos(std::pair<int, int> currentPos, std::pair<int, int> destPos, Side currentSide);
-        bool canKingInCheckMoveToSafePos(Side currentSide);
-        bool canFriendlyPiecesBlockEnemyPieces(Side currentSide);
-        bool canFriendlyPiecesDestroyEnemyAttackingKing(Side currentSide);
-        bool doesSideHaveMovesLeft(Side currentSide);
-        bool willMoveRenderSideInCheck(Side currentSide, std::pair<int, int> currentPos, std::pair<int, int> destPos);
+        bool inSetupMode();
+        
         // board status checks
         BoardStatus getStatus();
         BoardStatus getStatusAfterMove(std::pair<int, int> currentPos, std::pair<int, int> destPos);
