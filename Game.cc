@@ -25,7 +25,7 @@ void Game::start() {
 
             board->print();
 
-            BoardStatus boardStatus = board->getStatusBasic();
+            BoardStatus boardStatus = board->getCurrentStatusField();
             switch (boardStatus) {
                 case BoardStatus::WhiteCheck : std::cout << "White is in check." << std::endl; break;
                 case BoardStatus::BlackCheck : std::cout << "Black is in check." << std::endl; break;

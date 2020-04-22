@@ -8,6 +8,5 @@ Computer::~Computer() {}
 
 
 bool Computer::player_move(Board *board) {
-    //return board->CPUmove(side, diff_level);
-    return true;
+    return board->getComputerMove(side, diff_level);
 }

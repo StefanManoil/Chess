@@ -1,5 +1,94 @@
 #include "Board.h"
 
+// BoardStatus Board::getStatusAfterMove(std::pair<int,int> currPos, std::pair<int,int> destPos) {
+//     Side side = this->getSideOfPiece(currPos);
+//     if (side == Side::White) {
+
+//     }
+//     else if (side == Side::Black) {
+
+//     }
+// }
+
+// BoardStatus Board::getStatus() {
+//     std::pair<int,int> whiteKingPos, blackKingPos;
+//     for (auto item : actualPosOfWhitePieces) {
+//         if (item.second->getType() == Piecetype::King) {
+//             whiteKingPos = item.first;
+//         }
+//     }
+//     for (auto item : actualPosOfBlackPieces) {
+//         if (item.second->getType() == Piecetype::King) {
+//             blackKingPos = item.first;
+//         }
+//     }
+
+//     for (auto item : actualPosOfBlackPieces) {
+//         if (checkMove(whiteKingPos, item.second->getMoves(this))) {
+//             return BoardStatus::WhiteCheck;
+//         }
+//     }
+//     for (auto item : actualPosOfWhitePieces) {
+//         if (checkMove(blackKingPos, item.second->getMoves(this))) {
+//             return BoardStatus::BlackCheck;
+//         }
+//     }
+
+//     //Also need to check for checkmate
+
+//     return BoardStatus::Normal;
+// }
+
+bool checkMove(std::pair<int,int> dest, std::vector<std::pair<int,int>> moves) {
+    for (auto move : moves) {
+        if (dest.first == move.first && dest.second == move.second) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Board::canSideCaptureDestPos(std::pair<int, int> destPos, Side currentSide) {
+    if (currentSide == Side::White) {
+        for (auto item : actualPosOfWhitePieces) {
+            if (item.second->getType() == Piecetype::Pawn && item.first.first == destPos.first) { //might be second not sure
+                return false; //Pawn cannot capture by a straight move
+            }
+            else if (checkMove(destPos, item.second->getMoves(this))) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool Board::getComputerMove(Side side, int diff_level) {
+    std::vector<std::pair<std::pair<int,int>, std::pair<int,int>>> computerMoves;
+
+    if (side == Side::White) {
+        for (auto item : actualPosOfWhitePieces) {
+            std::vector<std::pair<std::pair<int,int>, std::pair<int,int>>> moves = item.second->getComputerMove(this, diff_level);
+            computerMoves.insert(computerMoves.end(), moves.begin(), moves.end());
+        }
+    }
+    else if (side == Side::Black) {
+        for (auto item : actualPosOfBlackPieces) {
+            std::vector<std::pair<std::pair<int,int>, std::pair<int,int>>> moves = item.second->getComputerMove(this, diff_level);
+            computerMoves.insert(computerMoves.end(), moves.begin(), moves.end());
+        }
+    }
+
+    if (computerMoves.size() == 0) {
+        return this->getComputerMove(side, diff_level-1);
+    }
+    std::pair<std::pair<int,int>, std::pair<int,int>> finalMove = computerMoves[rand() % computerMoves.size()];
+    return this->canPieceMoveToDestPos(finalMove.first, finalMove.second, side);
+}
+
+BoardStatus Board::getCurrentStatusField() {
+    return this->currentBoardStatus;
+}
+
 bool Board::inSetup() {
     return this->inSetupMode;
 }
@@ -449,7 +538,7 @@ void Board::exitSetup(){
       for (const auto& posPiecePair: this->actualPosOfBlackPieces) {
           if (posPiecePair.second->getType() == Piecetype::King) {
                 if (foundBlackKing) {
-                    std::cout << "Found more than one white king, you cannot exit Setup mode." << std::endl;
+                    std::cout << "Found more than one black king, you cannot exit Setup mode." << std::endl;
                     return;
                 }
                 else {
@@ -462,7 +551,7 @@ void Board::exitSetup(){
           return;
       }
       if (!foundWhiteKing) {
-          std::cout << "Did not find a black king, you cannot exit Setup mode." << std::endl;
+          std::cout << "Did not find a white king, you cannot exit Setup mode." << std::endl;
           return;
       }
       for (const auto& posPiecePair: this->actualPosOfWhitePieces) {

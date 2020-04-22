@@ -24,6 +24,7 @@ class Piece {
         std::pair<int,int> getCoordinates();
         bool hasMoved();
         bool checkMove(Board *board, std::pair<int,int> move);
+        std::vector<std::pair<std::pair<int,int>, std::pair<int,int>>> getComputerMove(Board *board, int diff_level);
 };
 
 #endif

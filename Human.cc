@@ -21,8 +21,6 @@ bool Human::player_move(Board *board) {
         try{
             coordinate1 = Conversion::toCoordinate(move_from);
             coordinate2 = Conversion::toCoordinate(move_to);
-            std::cout << "coordinate1: " << coordinate1.first << coordinate1.second << std::endl;
-            std::cout << "coordinate2: " << coordinate2.first << coordinate2.second << std::endl;
         }
         catch (const string *msg){
             return false;

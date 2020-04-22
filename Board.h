@@ -63,9 +63,11 @@ class Board {
         BoardStatus getStatusAfterMove(std::pair<int, int> currentPos, std::pair<int, int> destPos);
         //
         BoardStatus getStatusOfCurrentSide(Side currentSide);
+        BoardStatus getCurrentStatusField();
         BoardStatus getStatusBasic();
         BoardStatus getStatusField();
         // ^ not sure if getStatus should have side yet or not
+        bool getComputerMove(Side side, int diff_level);
 };
 
 #endif

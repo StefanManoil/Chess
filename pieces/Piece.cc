@@ -1,6 +1,45 @@
 #include "Piece.h"
 #include "../Board.h"
 
+std::vector<std::pair<std::pair<int,int>, std::pair<int,int>>> Piece::getComputerMove(Board *board, int diff_level) {
+    std::vector<std::pair<int,int>> moves = this->getMoves(board);
+    std::vector<std::pair<std::pair<int,int>, std::pair<int,int>>> computerMoves;
+    Side oppositeSide = this->side == Side::White ? Side::Black : Side::White;
+    for (auto move : moves) {
+        if (board->willMoveRenderSideInCheck(this->side, this->coordinates, move)) {
+            continue;
+        }
+
+        if (diff_level == 1) {
+            computerMoves.emplace_back(std::make_pair(this->coordinates, move));
+        }
+        else if (diff_level == 2) {
+            //BoardStatus status = board->getStatusAfterMove(move)
+            BoardStatus status;
+            Side sideAtMove = board->getSideOfPiece(move);
+            std::pair<std::pair<int,int>, std::pair<int,int>> goodMove = std::make_pair(this->coordinates, move);
+            if (sideAtMove == oppositeSide) { //
+                computerMoves.emplace_back(goodMove);
+            }
+            else if (this->side == Side::White && (status == BoardStatus::BlackCheck || status == BoardStatus::BlackCheckmate)) {
+                computerMoves.emplace_back(goodMove);
+            }
+            else if (this->side == Side::Black && (status == BoardStatus::WhiteCheck || status == BoardStatus::WhiteCheckmate)) {
+                computerMoves.emplace_back(goodMove);
+            }
+        }
+        else if (diff_level == 3) {
+            bool inDanger = board->canSideCaptureDestPos(this->coordinates, oppositeSide);
+            bool canEscape = !board->canSideCaptureDestPos(move, oppositeSide);
+
+            if (inDanger && canEscape) {
+                computerMoves.emplace_back(std::make_pair(this->coordinates, move));
+            }
+        }
+    }
+    return computerMoves;
+}
+
 std::pair<int,int> Piece::getCoordinates() {
     return this->coordinates;
 }
