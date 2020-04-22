@@ -3,6 +3,8 @@
 
 #include "pieces/Piece.h"
 #include <vector>
+#include <utility>
+#include <string>
 #include <set>
 #include <map>
 #include <iostream>
@@ -16,11 +18,19 @@
 
 class Board {
     private:
-        std::vector<std::vector<Piece*>> pieces;
-        std::vector<Piece*> actualPieces;
-        std::map<std::pair<int, int>, Piece*> actualPosOfPieces;
+        //std::vector<std::vector<Piece*>> pieces;
+        //std::vector<Piece*> actualPieces;
+        //
+        //std::map<std::pair<int, int>, Piece*> actualPosOfPieces;
+        std::map<std::pair<int, int>, Piece*> actualPosOfWhitePieces;
+        std::map<std::pair<int, int>, Piece*> actualPosOfBlackPieces;
         bool inSetupMode = false;
-        bool gameInProgress;
+        bool gameInProgress = false;
+        bool whiteSideNoMoves = false;
+        bool blackSideNoMoves = false;
+        // maybes
+        std::string invalidMoveMessageIfNeeded;
+        BoardStatus currentBoardStatus = BoardStatus::Default;
     public:
         Board();
         bool inSetup();
@@ -35,13 +45,23 @@ class Board {
         Piecetype getTypeOfPiece(std::pair<int, int> location);
         Side getSideOfPiece(std::pair<int, int> location);
         // player move logic
-        bool canMovePiece(std::pair<int, int> currentPos);
+        //bool canMovePiece(std::pair<int, int> currentPos);
         bool pieceAtPosMoved(std::pair<int, int> currentPos);
-        bool capturable(std::pair<int, int> pos, Side side);
+        bool canSideCaptureDestPos(std::pair<int, int> destPos, Side currentSide);
+        //
+        bool canPieceMoveToDestPos(std::pair<int, int> currentPos, std::pair<int, int> destPos, Side currentSide);
+        bool canKingInCheckMoveToSafePos(Side currentSide);
+        bool canFriendlyPiecesBlockEnemyPieces(Side currentSide);
+        bool canFriendlyPiecesDestroyEnemyAttackingKing(Side currentSide);
+        bool doesSideHaveMovesLeft(Side currentSide);
+        bool willMoveRenderSideInCheck(Side currentSide, std::pair<int, int> currentPos, std::pair<int, int> destPos);
         // board status checks
-        BoardStatus getStatusBasic();
         BoardStatus getStatus();
-        BoardStatus getStatusUponMove(std::pair<int, int> currentPos, std::pair<int, int> destPos);
+        BoardStatus getStatusAfterMove(std::pair<int, int> currentPos, std::pair<int, int> destPos);
+        //
+        BoardStatus getStatusOfCurrentSide(Side currentSide);
+        BoardStatus getStatusBasic();
+        BoardStatus getStatusField();
         // ^ not sure if getStatus should have side yet or not
 };
 

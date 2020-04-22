@@ -15,6 +15,4 @@ public:
     static Side toSide(string piece);
 };
 
-
-
 #endif
