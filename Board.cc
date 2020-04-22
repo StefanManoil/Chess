@@ -89,7 +89,7 @@ BoardStatus Board::getCurrentStatusField() {
     return this->currentBoardStatus;
 }
 
-bool Board::inSetupMode() {
+bool Board::inSetup() {
     return this->inSetupMode;
 }
 
@@ -1002,7 +1002,7 @@ bool Board::canPieceMoveToDestPos(std::pair<int, int> currentPos, std::pair<int,
                 return false;
             }
             else if (currentSide == Side::Black) {
-                this->currentBoardStatus == BoardStatus::BlackCheckmate;
+                this->currentBoardStatus = BoardStatus::BlackCheckmate;
             }
         }
         // If all of these situations fail, then white is in Checkmate and black has won the game
@@ -1044,7 +1044,7 @@ bool Board::canPieceMoveToDestPos(std::pair<int, int> currentPos, std::pair<int,
     // Based on the move white wants to make, we must check if the move will render the king in check.
     // If it does this is illegal and not allowed and we must return false.
     if (this->willMoveRenderSideInCheck(currentSide, currentPos, destPos)) {
-        this->currentBoardStatus == BoardStatus::WhiteCheck;
+        this->currentBoardStatus = BoardStatus::WhiteCheck;
         return false;
     }
     // If the move is valid and we indeed do not render the white king in check, then we can go ahead

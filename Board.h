@@ -37,15 +37,15 @@ class Board {
         bool canFriendlyPiecesBlockEnemyPieces(Side currentSide);
         bool canFriendlyPiecesDestroyEnemyAttackingKing(Side currentSide);
         bool doesSideHaveMovesLeft(Side currentSide);
-        bool willMoveRenderSideInCheck(Side currentSide, std::pair<int, int> currentPos, std::pair<int, int> destPos);
         bool isValidCurrentPos(std::pair<int, int> currentPos, Side currentSide);
         bool isValidDestPos(std::pair<int, int> destPos, Side currentSide);
         bool isCapturingMove(std::pair<int, int> destPos, Side currentSide);
         void captureMove(std::pair<int, int> currentPos, std::pair<int, int> destPos, Side currentSide);
         void emptyMove(std::pair<int, int> currentPos, std::pair<int, int> destPos, Side currentSide);
-        bool canSideCaptureDestPos(std::pair<int, int> destPos, Side currentSide);
     public:
-        Board();
+        Board() {
+            resetBoard();
+        };
         // void methods
         void setPieceInSetup(std::pair<int, int> pos, Side side, Piecetype piecetype);
         void removePieceInSetup(std::pair<int , int> location);
@@ -62,7 +62,10 @@ class Board {
         bool isCapturingMove(std::pair<int, int> currentPos, std::pair<int, int> destPos, Side currentSide);
         //
         bool canPieceMoveToDestPos(std::pair<int, int> currentPos, std::pair<int, int> destPos, Side currentSide);
-        bool inSetupMode();
+        bool inSetup();
+
+        bool willMoveRenderSideInCheck(Side currentSide, std::pair<int, int> currentPos, std::pair<int, int> destPos);
+        bool canSideCaptureDestPos(std::pair<int, int> destPos, Side currentSide);
         
         // board status checks
         BoardStatus getStatus();
