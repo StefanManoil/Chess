@@ -14,7 +14,7 @@ std::vector<std::pair<std::pair<int,int>, std::pair<int,int>>> Piece::getCompute
             computerMoves.emplace_back(std::make_pair(this->coordinates, move));
         }
         else if (diff_level == 2) {
-            //BoardStatus status = board->getStatusAfterMove(move)
+            //BoardStatus status = board->willMoveRenderSideInCheck(this->side, this->coordinates, move);
             BoardStatus status;
             Side sideAtMove = board->getSideOfPiece(move);
             std::pair<std::pair<int,int>, std::pair<int,int>> goodMove = std::make_pair(this->coordinates, move);
@@ -49,7 +49,7 @@ bool Piece::hasMoved() {
 }
 
 bool Piece::checkMove(Board *board, std::pair<int,int> move) {
-    if ((move.first > 0 && move.first < 7) && (move.second > 0 && move.second < 7)) {
+    if ((move.first >= 0 && move.first <= 7) && (move.second >= 0 && move.second <= 7)) {
         Side pieceAtMove = board->getSideOfPiece(move);
         if (this->side != pieceAtMove) {
             return true;
