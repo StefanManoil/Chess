@@ -3,7 +3,7 @@
 
 #include "Side.h"
 #include "Board.h"
-#include "player.h"
+#include "Player.h"
 #include "conversion.h"
 #include <sstream>
 #include <string>

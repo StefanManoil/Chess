@@ -4,7 +4,7 @@
 #include "Player.h"
 #include "Human.h"
 #include "Computer.h"
-#include "Piecetype.h"
+#include "pieces/Piecetype.h"
 #include "conversion.h"
 #include <string>
 #include <iostream>
@@ -31,20 +31,20 @@ int main() {
             std::string location;
             std::cin >> location;
 
-            //Piecetype p = get piecetype from piece string
-            //Side s = get side from piece string
-            //std::pair<int,int> coordinate = get coordinate from location string
+            Piecetype pieceType = Conversion::toType(piece);
+            Side side = Conversion::toSide(piece); 
+            std::pair<int,int> pos = Conversion::toCoordinate(location);
 
-            //more stuff to do here after the above comments work
-
+            board->setPieceInSetup(pos, side, pieceType);
+            board->print();
         }
         else if (input == "-") {
             std::string location;
             std::cin >> location;
 
-            //std::pair<int,int> coordinate = get coordinate from location string
-            //board->setupRemove(coordinate);
-            //board->print();
+            std::pair<int,int> pos = Conversion::toCoordinate(location);
+            board->removePieceInSetup(pos);
+            board->print();
         }
         else if (input == "=") {
             std::string colour;
@@ -53,9 +53,11 @@ int main() {
             if (board->inSetup()) {
                 if (colour == "black") {
                     first = Side::Black;
+                    std::cout << "Black going first" << std::endl;
                 }
                 else if (colour == "white") {
                     first = Side::White;
+                    std::cout << "White going first" << std::endl;
                 }
             }
             else {

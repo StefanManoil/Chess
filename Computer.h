@@ -3,7 +3,7 @@
 
 #include "Side.h"
 #include "Board.h"
-#include "player.h"
+#include "Player.h"
 
 class Computer: public Player {
     int diff_level;

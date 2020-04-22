@@ -1,4 +1,5 @@
 #include "Knight.h"
+#include "../Board.h"
 
 Piecetype Knight::getType() {
     return Piecetype::Knight;

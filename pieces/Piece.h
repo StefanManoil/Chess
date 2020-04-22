@@ -5,7 +5,8 @@
 #include <vector>
 #include "Piecetype.h"
 #include "../Side.h"
-#include "../Board.h"
+
+class Board;
 
 class Piece {
     protected:

@@ -1,4 +1,5 @@
 #include "Pawn.h"
+#include "../Board.h"
 
 Piecetype Pawn::getType() {
     return Piecetype::Pawn;
@@ -21,7 +22,7 @@ std::vector<std::pair<int,int>> Pawn::getMoves(Board *board) {
         if (checkMove(board, move)) {
             moves.emplace_back(move);
         }
-        if (!this->hasMoved) {
+        if (!this->hasMoved()) {
             //Black moving 2 space forward
             move = std::make_pair(x, y + 2);
             if (checkMove(board, move)) {
@@ -52,7 +53,7 @@ std::vector<std::pair<int,int>> Pawn::getMoves(Board *board) {
         }
 
         //White moving 2 space forward
-        if (!this->hasMoved) {
+        if (!this->hasMoved()) {
             move = std::make_pair(x, y-2);
             if (checkMove(board, move)) {
                 moves.emplace_back(move);

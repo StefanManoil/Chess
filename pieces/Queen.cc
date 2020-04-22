@@ -1,4 +1,5 @@
 #include "Queen.h"
+#include "../Board.h"
 
 Piecetype Queen::getType() {
     return Piecetype::Queen;

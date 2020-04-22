@@ -1,4 +1,5 @@
 #include "Rook.h"
+#include "../Board.h"
 
 Piecetype Rook::getType() {
     return Piecetype::Rook;

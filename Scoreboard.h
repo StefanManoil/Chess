@@ -12,7 +12,6 @@ public:
     Scoreboard();
     void printScore();
     void winScore(Side winner);
-    void stalemate();
 };
 
 #endif

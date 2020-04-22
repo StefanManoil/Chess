@@ -1,4 +1,5 @@
 #include "Piece.h"
+#include "../Board.h"
 
 std::pair<int,int> Piece::getCoordinates() {
     return this->coordinates;
@@ -56,7 +57,7 @@ std::vector<std::pair<int,int>> Piece::getStraightMoves(Board *board) {
     return moves;
 }
 
-std::vector<std::pair<int,int>> Piece::getDiagonalMoves(Board board) {
+std::vector<std::pair<int,int>> Piece::getDiagonalMoves(Board *board) {
     std::vector<std::pair<int,int>> moves;
     std::pair<int,int> move;
 

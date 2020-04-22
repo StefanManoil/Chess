@@ -2,8 +2,8 @@
 #ifndef _CONVERSION_H
 #define _CONVERSION_H
 
-#include "Piecetype.h"
-#include "side.h"
+#include "pieces/Piecetype.h"
+#include "Side.h"
 #include <string>
 
 using namespace std;

@@ -1,4 +1,5 @@
 #include "Bishop.h"
+#include "../Board.h"
 
 Piecetype Bishop::getType() {
     return Piecetype::Bishop;

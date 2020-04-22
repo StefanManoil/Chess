@@ -1,7 +1,6 @@
 #ifndef _BOARD_H_
 #define _BOARD_H_
 
-#include "pieces/Piece.h"
 #include <vector>
 #include <utility>
 #include <string>
@@ -15,6 +14,8 @@
 #include "pieces/Pawn.h"
 #include "pieces/Queen.h"
 #include "pieces/Rook.h"
+
+class Piece;
 
 class Board {
     private:
@@ -30,9 +31,11 @@ class Board {
         bool blackSideNoMoves = false;
         // maybes
         std::string invalidMoveMessageIfNeeded;
-        BoardStatus currentBoardStatus = BoardStatus::Default;
+        BoardStatus currentBoardStatus = BoardStatus::Normal;
     public:
-        Board();
+        Board() {
+            resetBoard();
+        };
         bool inSetup();
         // void methods
         void setPieceInSetup(std::pair<int, int> pos, Side side, Piecetype piecetype);

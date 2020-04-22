@@ -67,10 +67,10 @@ bool Board::pieceAtPosMoved(std::pair<int,int> location) {
   }
   return false;  // or return true not sure */
   if (this->actualPosOfWhitePieces.count(location) > 0) {
-      return this->actualPosOfWhitePieces.at(location)->pieceMoved();
+      return this->actualPosOfWhitePieces.at(location)->hasMoved();
   }
   if (this->actualPosOfBlackPieces.count(location) > 0) {
-      return this->actualPosOfBlackPieces.at(location)->pieceMoved();
+      return this->actualPosOfBlackPieces.at(location)->hasMoved();
   }
   return false;
 }
@@ -513,8 +513,8 @@ BoardStatus Board::getStatusBasic() {
     for (const auto& posPiecePairBlacks : this->actualPosOfBlackPieces) {
         if (posPiecePairBlacks.second->getType() == Piecetype::King) {
             for (const auto& posPiecePairWhites : actualPosOfWhitePieces) {
-                for (int i = 0; i < posPiecePairWhites.second->getMoves().size(); i++) {
-                    if (posPiecePairWhites.second->getMoves.at(i) == posPiecePairBlacks.first) {
+                for (int i = 0; i < posPiecePairWhites.second->getMoves(this).size(); i++) {
+                    if (posPiecePairWhites.second->getMoves(this).at(i) == posPiecePairBlacks.first) {
                         return BoardStatus::BlackCheck;
                     }
                 }
@@ -524,8 +524,8 @@ BoardStatus Board::getStatusBasic() {
     for (const auto& posPiecePairWhites : actualPosOfWhitePieces) {
         if (posPiecePairWhites.second->getType() == Piecetype::King) {
             for (const auto& posPiecePairBlacks : actualPosOfBlackPieces) {
-                for (int i = 0; i < posPiecePairBlacks.second->getMoves().size(); i++) {
-                    if (posPiecePairBlacks.second->getMoves.at(i) == posPiecePairWhites.first) {
+                for (int i = 0; i < posPiecePairBlacks.second->getMoves(this).size(); i++) {
+                    if (posPiecePairBlacks.second->getMoves(this).at(i) == posPiecePairWhites.first) {
                         return BoardStatus::WhiteCheck;
                     }
                 }
@@ -579,8 +579,8 @@ BoardStatus Board::getStatusOfCurrentSide(Side currentSide) {
         for (const auto& posPiecePairWhites : this->actualPosOfWhitePieces) {
             if (posPiecePairWhites.second->getType() == Piecetype::King) {
                 for (const auto& posPiecePairBlacks : actualPosOfBlackPieces) {
-                    for (int i = 0; i < posPiecePairBlacks.second->getMoves().size(); i++) {
-                        if (posPiecePairBlacks.second->getMoves.at(i) == posPiecePairWhites.first) {
+                    for (int i = 0; i < posPiecePairBlacks.second->getMoves(this).size(); i++) {
+                        if (posPiecePairBlacks.second->getMoves(this).at(i) == posPiecePairWhites.first) {
                             return BoardStatus::WhiteCheck;
                         }
                     }
@@ -592,8 +592,8 @@ BoardStatus Board::getStatusOfCurrentSide(Side currentSide) {
         for (const auto& posPiecePairBlacks : this->actualPosOfBlackPieces) {
             if (posPiecePairBlacks.second->getType() == Piecetype::King) {
                 for (const auto& posPiecePairWhites : actualPosOfWhitePieces) {
-                    for (int i = 0; i < posPiecePairWhites.second->getMoves().size(); i++) {
-                        if (posPiecePairBlacks.second->getMoves.at(i) == posPiecePairWhites.first) {
+                    for (int i = 0; i < posPiecePairWhites.second->getMoves(this).size(); i++) {
+                        if (posPiecePairBlacks.second->getMoves(this).at(i) == posPiecePairWhites.first) {
                             return BoardStatus::BlackCheck;
                         }
                     }
@@ -601,19 +601,19 @@ BoardStatus Board::getStatusOfCurrentSide(Side currentSide) {
             }
         }
     }
-    return BoardStatus::Default;
+    return BoardStatus::Normal;
 }
 
 bool Board::canKingInCheckMoveToSafePos(Side currentSide) {
     if (currentSide == Side::White) {
         for (const auto& posPiecePairWhites : this->actualPosOfWhitePieces) {
             if (posPiecePairWhites.second->getType() == Piecetype::King) {
-                int countOfMoves = posPiecePairWhites.second->getMoves.size();
-                for (int i = 0; i < posPiecePairWhites.second->getMoves.size(); i++) {
+                int countOfMoves = posPiecePairWhites.second->getMoves(this).size();
+                for (int i = 0; i < posPiecePairWhites.second->getMoves(this).size(); i++) {
                     for (const auto& posPiecePairBlacks : this->actualPosOfBlackPieces) {
-                        for (int j = 0; j < posPiecePairBlacks.second->getMoves().size(); j++) {
-                            if (posPiecePairBlacks.second->getMoves.at(j) == 
-                                posPiecePairWhites.second->getMoves.at(i)) {
+                        for (int j = 0; j < posPiecePairBlacks.second->getMoves(this).size(); j++) {
+                            if (posPiecePairBlacks.second->getMoves(this).at(j) == 
+                                posPiecePairWhites.second->getMoves(this).at(i)) {
                                     countOfMoves--;
                                     if (countOfMoves <= 0) return false;
                                 }
@@ -626,12 +626,12 @@ bool Board::canKingInCheckMoveToSafePos(Side currentSide) {
     else if (currentSide == Side::Black) {
         for (const auto& posPiecePairBlacks : this->actualPosOfBlackPieces) {
             if (posPiecePairBlacks.second->getType() == Piecetype::King) {
-                int countOfMoves = posPiecePairBlacks.second->getMoves.size();
-                for (int i = 0; i < posPiecePairBlacks.second->getMoves.size(); i++) {
+                int countOfMoves = posPiecePairBlacks.second->getMoves(this).size();
+                for (int i = 0; i < posPiecePairBlacks.second->getMoves(this).size(); i++) {
                     for (const auto& posPiecePairWhites : this->actualPosOfWhitePieces) {
-                        for (int j = 0; j < posPiecePairWhites.second->getMoves().size(); j++) {
-                            if (posPiecePairWhites.second->getMoves.at(j) == 
-                                posPiecePairBlacks.second->getMoves.at(i)) {
+                        for (int j = 0; j < posPiecePairWhites.second->getMoves(this).size(); j++) {
+                            if (posPiecePairWhites.second->getMoves(this).at(j) == 
+                                posPiecePairBlacks.second->getMoves(this).at(i)) {
                                     countOfMoves--;
                                     if (countOfMoves <= 0) return false;
                                 }
@@ -654,8 +654,8 @@ bool Board::canFriendlyPiecesBlockEnemyPieces(Side currentSide) {
             if (posPiecePairWhites.second->getType() == Piecetype::King) {
                 std::vector<Piece*> attackingPieces;
                 for (const auto& posPiecePairBlacks : this->actualPosOfBlackPieces) {
-                    for (int i = 0; i < posPiecePairBlacks.second->getMoves().size(); i++) {
-                        if (posPiecePairBlacks.second->getMoves.at(i) == posPiecePairWhites.first) {
+                    for (int i = 0; i < posPiecePairBlacks.second->getMoves(this).size(); i++) {
+                        if (posPiecePairBlacks.second->getMoves(this).at(i) == posPiecePairWhites.first) {
                             attackingPieces.emplace_back(posPiecePairBlacks.second);
                         }
                     }
@@ -667,17 +667,17 @@ bool Board::canFriendlyPiecesBlockEnemyPieces(Side currentSide) {
                     attackingPieces.clear();
                     return false;
                 }
-                for (int i = 0; i < attackingPieces.at(0)->getMoves().size(); i++) {
-                    if (attackingPieces.at(0)->getMoves.at(i) != posPiecePairWhites.first) {
-                        attackingPieceMovesNotIncludingFriendlyKing.emplace_back(attackingPieces.at(0)->getMoves.at(i));
+                for (int i = 0; i < attackingPieces.at(0)->getMoves(this).size(); i++) {
+                    if (attackingPieces.at(0)->getMoves(this).at(i) != posPiecePairWhites.first) {
+                        attackingPieceMovesNotIncludingFriendlyKing.emplace_back(attackingPieces.at(0)->getMoves(this).at(i));
                     }
                 }
             }
         }
         for (const auto& posPiecePairWhites : this->actualPosOfWhitePieces) {
-            for (int i = 0; i < posPiecePairWhites.second->getMoves().size(); i++) {
+            for (int i = 0; i < posPiecePairWhites.second->getMoves(this).size(); i++) {
                 for (int j = 0; j < attackingPieceMovesNotIncludingFriendlyKing.size(); j++) {
-                    if (posPiecePairWhites.second->getMoves().at(i) == 
+                    if (posPiecePairWhites.second->getMoves(this).at(i) == 
                         attackingPieceMovesNotIncludingFriendlyKing.at(j)) {
                             return true;
                     }
@@ -691,8 +691,8 @@ bool Board::canFriendlyPiecesBlockEnemyPieces(Side currentSide) {
             if (posPiecePairBlacks.second->getType() == Piecetype::King) {
                 std::vector<Piece*> attackingPieces;
                 for (const auto& posPiecePairWhites : this->actualPosOfWhitePieces) {
-                    for (int i = 0; i < posPiecePairWhites.second->getMoves().size(); i++) {
-                        if (posPiecePairWhites.second->getMoves.at(i) == posPiecePairBlacks.first) {
+                    for (int i = 0; i < posPiecePairWhites.second->getMoves(this).size(); i++) {
+                        if (posPiecePairWhites.second->getMoves(this).at(i) == posPiecePairBlacks.first) {
                             attackingPieces.emplace_back(posPiecePairWhites.second);
                         }
                     }
@@ -704,17 +704,17 @@ bool Board::canFriendlyPiecesBlockEnemyPieces(Side currentSide) {
                     attackingPieces.clear();
                     return false;
                 }
-                for (int i = 0; i < attackingPieces.at(0)->getMoves().size(); i++) {
-                    if (attackingPieces.at(0)->getMoves.at(i) != posPiecePairBlacks.first) {
-                        attackingPieceMovesNotIncludingFriendlyKing.emplace_back(attackingPieces.at(0)->getMoves.at(i));
+                for (int i = 0; i < attackingPieces.at(0)->getMoves(this).size(); i++) {
+                    if (attackingPieces.at(0)->getMoves(this).at(i) != posPiecePairBlacks.first) {
+                        attackingPieceMovesNotIncludingFriendlyKing.emplace_back(attackingPieces.at(0)->getMoves(this).at(i));
                     }
                 }
             }
         }
         for (const auto& posPiecePairBlacks : this->actualPosOfBlackPieces) {
-            for (int i = 0; i < posPiecePairBlacks.second->getMoves().size(); i++) {
+            for (int i = 0; i < posPiecePairBlacks.second->getMoves(this).size(); i++) {
                 for (int j = 0; j < attackingPieceMovesNotIncludingFriendlyKing.size(); j++) {
-                    if (posPiecePairBlacks.second->getMoves().at(i) == 
+                    if (posPiecePairBlacks.second->getMoves(this).at(i) == 
                         attackingPieceMovesNotIncludingFriendlyKing.at(j)) {
                             return true;
                     }
@@ -735,8 +735,8 @@ bool Board::canFriendlyPiecesDestroyEnemyAttackingKing(Side currentSide) {
             if (posPiecePairWhites.second->getType() == Piecetype::King) {
                 std::vector<Piece*> attackingPieces;
                 for (const auto& posPiecePairBlacks : this->actualPosOfBlackPieces) {
-                    for (int i = 0; i < posPiecePairBlacks.second->getMoves().size(); i++) {
-                        if (posPiecePairBlacks.second->getMoves.at(i) == posPiecePairWhites.first) {
+                    for (int i = 0; i < posPiecePairBlacks.second->getMoves(this).size(); i++) {
+                        if (posPiecePairBlacks.second->getMoves(this).at(i) == posPiecePairWhites.first) {
                             attackingPieces.emplace_back(posPiecePairBlacks.second);
                         }
                     }
@@ -751,8 +751,8 @@ bool Board::canFriendlyPiecesDestroyEnemyAttackingKing(Side currentSide) {
             }
         }
         for (const auto& posPiecePairWhites : this->actualPosOfWhitePieces) {
-            for (int i = 0; i < posPiecePairWhites.second->getMoves().size(); i++) {
-                if (posPiecePairWhites.second->getMoves().at(i) == attackingPieceLocation) {
+            for (int i = 0; i < posPiecePairWhites.second->getMoves(this).size(); i++) {
+                if (posPiecePairWhites.second->getMoves(this).at(i) == attackingPieceLocation) {
                     return true;
                 }
             }
@@ -764,8 +764,8 @@ bool Board::canFriendlyPiecesDestroyEnemyAttackingKing(Side currentSide) {
             if (posPiecePairBlacks.second->getType() == Piecetype::King) {
                 std::vector<Piece*> attackingPieces;
                 for (const auto& posPiecePairWhites : this->actualPosOfWhitePieces) {
-                    for (int i = 0; i < posPiecePairWhites.second->getMoves().size(); i++) {
-                        if (posPiecePairWhites.second->getMoves.at(i) == posPiecePairBlacks.first) {
+                    for (int i = 0; i < posPiecePairWhites.second->getMoves(this).size(); i++) {
+                        if (posPiecePairWhites.second->getMoves(this).at(i) == posPiecePairBlacks.first) {
                             attackingPieces.emplace_back(posPiecePairWhites.second);
                         }
                     }
@@ -780,8 +780,8 @@ bool Board::canFriendlyPiecesDestroyEnemyAttackingKing(Side currentSide) {
             }
         }
         for (const auto& posPiecePairBlacks : this->actualPosOfBlackPieces) {
-            for (int i = 0; i < posPiecePairBlacks.second->getMoves().size(); i++) {
-                if (posPiecePairBlacks.second->getMoves().at(i) == attackingPieceLocation) {
+            for (int i = 0; i < posPiecePairBlacks.second->getMoves(this).size(); i++) {
+                if (posPiecePairBlacks.second->getMoves(this).at(i) == attackingPieceLocation) {
                     return true;
                 }
             }
@@ -798,8 +798,8 @@ bool Board::willMoveRenderSideInCheck(Side currentSide, std::pair<int, int> curr
             this->actualPosOfWhitePieces.at(currentPos) = nullptr;
             this->actualPosOfWhitePieces.erase(currentPos);
             for (const auto& posPiecePairBlacks : this->actualPosOfBlackPieces) {
-                for (int i = 0; i < posPiecePairBlacks.second->getMoves().size(); i++) {
-                    if (posPiecePairBlacks.second->getMoves().at(i) == destPos) {
+                for (int i = 0; i < posPiecePairBlacks.second->getMoves(this).size(); i++) {
+                    if (posPiecePairBlacks.second->getMoves(this).at(i) == destPos) {
                         delete this->actualPosOfWhitePieces.at(destPos);
                         this->actualPosOfWhitePieces.at(destPos) = nullptr;
                         this->actualPosOfWhitePieces.erase(destPos);
@@ -837,8 +837,8 @@ bool Board::willMoveRenderSideInCheck(Side currentSide, std::pair<int, int> curr
                 }
             }
             for (const auto& posPiecePairBlacks : this->actualPosOfBlackPieces) {
-                for (int i = 0; i < posPiecePairBlacks.second->getMoves().size(); i++) {
-                    if (posPiecePairBlacks.second->getMoves().at(i) == friendlyKingPos) {
+                for (int i = 0; i < posPiecePairBlacks.second->getMoves(this).size(); i++) {
+                    if (posPiecePairBlacks.second->getMoves(this).at(i) == friendlyKingPos) {
                         delete this->actualPosOfWhitePieces.at(destPos);
                         this->actualPosOfWhitePieces.at(destPos) = nullptr;
                         this->actualPosOfWhitePieces.erase(destPos);
@@ -870,8 +870,8 @@ bool Board::willMoveRenderSideInCheck(Side currentSide, std::pair<int, int> curr
             this->actualPosOfBlackPieces.at(currentPos) = nullptr;
             this->actualPosOfBlackPieces.erase(currentPos);
             for (const auto& posPiecePairWhites : this->actualPosOfWhitePieces) {
-                for (int i = 0; i < posPiecePairWhites.second->getMoves().size(); i++) {
-                    if (posPiecePairWhites.second->getMoves().at(i) == destPos) {
+                for (int i = 0; i < posPiecePairWhites.second->getMoves(this).size(); i++) {
+                    if (posPiecePairWhites.second->getMoves(this).at(i) == destPos) {
                         delete this->actualPosOfBlackPieces.at(destPos);
                         this->actualPosOfBlackPieces.at(destPos) = nullptr;
                         this->actualPosOfBlackPieces.erase(destPos);
@@ -909,8 +909,8 @@ bool Board::willMoveRenderSideInCheck(Side currentSide, std::pair<int, int> curr
                 }
             }
             for (const auto& posPiecePairWhites : this->actualPosOfWhitePieces) {
-                for (int i = 0; i < posPiecePairWhites.second->getMoves().size(); i++) {
-                    if (posPiecePairWhites.second->getMoves().at(i) == friendlyKingPos) {
+                for (int i = 0; i < posPiecePairWhites.second->getMoves(this).size(); i++) {
+                    if (posPiecePairWhites.second->getMoves(this).at(i) == friendlyKingPos) {
                         delete this->actualPosOfBlackPieces.at(destPos);
                         this->actualPosOfBlackPieces.at(destPos) = nullptr;
                         this->actualPosOfBlackPieces.erase(destPos);
@@ -941,9 +941,9 @@ bool Board::willMoveRenderSideInCheck(Side currentSide, std::pair<int, int> curr
 bool Board::doesSideHaveMovesLeft(Side currentSide) {
     if (currentSide == Side::White) {
         for (const auto& posPiecePairWhites : this->actualPosOfWhitePieces) {
-            for (int i = 0; i < posPiecePairWhites.second->getMoves().size(); i++) {
+            for (int i = 0; i < posPiecePairWhites.second->getMoves(this).size(); i++) {
                 if (this->willMoveRenderSideInCheck
-                   (Side::White, posPiecePairWhites.first, posPiecePairWhites.second->getMoves().at(i)) == false) {
+                   (Side::White, posPiecePairWhites.first, posPiecePairWhites.second->getMoves(this).at(i)) == false) {
                        return true;
                 }
             }
@@ -951,9 +951,9 @@ bool Board::doesSideHaveMovesLeft(Side currentSide) {
     }
     else if (currentSide == Side::Black) {
         for (const auto& posPiecePairBlacks : this->actualPosOfBlackPieces) {
-            for (int i = 0; i < posPiecePairBlacks.second->getMoves().size(); i++) {
+            for (int i = 0; i < posPiecePairBlacks.second->getMoves(this).size(); i++) {
                 if (this->willMoveRenderSideInCheck
-                   (Side::White, posPiecePairBlacks.first, posPiecePairBlacks.second->getMoves().at(i)) == false) {
+                   (Side::White, posPiecePairBlacks.first, posPiecePairBlacks.second->getMoves(this).at(i)) == false) {
                        return true;
                 }
             }
@@ -1033,4 +1033,5 @@ bool Board::canPieceMoveToDestPos(std::pair<int, int> currentPos, std::pair<int,
         // If we are moving to an empty piece then we check for pawn promotion and castling, and if this 
         // does not happen we simply move the current white piece to its destPos
     }
+    return true;
 }
