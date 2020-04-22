@@ -59,6 +59,7 @@ class Board {
         // player move logic
         //bool canMovePiece(std::pair<int, int> currentPos);
         bool pieceAtPosMoved(std::pair<int, int> currentPos);
+        bool isValidMove(std::pair<int,int> from, std::pair<int,int> to, Side side);
         bool isCapturingMove(std::pair<int, int> currentPos, std::pair<int, int> destPos, Side currentSide);
         //
         bool canPieceMoveToDestPos(std::pair<int, int> currentPos, std::pair<int, int> destPos, Side currentSide);

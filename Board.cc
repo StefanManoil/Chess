@@ -2,23 +2,11 @@
 
 bool checkMove(std::pair<int,int> dest, std::vector<std::pair<int,int>> moves) {
     for (auto move : moves) {
-        std::cout << "KING POS: " << dest.first << "," << dest.second << std::endl;
-        std::cout << "CHECK MOVE: " << move.first << "," << move.second << std::endl;
         if (dest.first == move.first && dest.second == move.second) {
             return true;
         }
     }
     return false;
-}
-
-BoardStatus Board::getStatusAfterMove(std::pair<int,int> currPos, std::pair<int,int> destPos) {
-    Side side = this->getSideOfPiece(currPos);
-    if (side == Side::White) {
-
-    }
-    else if (side == Side::Black) {
-
-    }
 }
 
 BoardStatus Board::getStatus() {
@@ -51,8 +39,8 @@ BoardStatus Board::getStatus() {
         }
     }
 
-    if (this->currentBoardStatus == BoardStatus::WhiteCheck) { //also check for checkmate
-
+    if (this->currentBoardStatus == BoardStatus::WhiteCheck || this->currentBoardStatus == BoardStatus::BlackCheck) { //also check for checkmate
+    
     }
 
     //Also need to check for checkmate
@@ -618,6 +606,24 @@ bool Board::canFriendlyPiecesDestroyEnemyAttackingKing(Side currentSide) {
     return false;
 }
 
+// BoardStatus Board::getStatusAfterMove(std::pair<int,int> currPos, std::pair<int,int> destPos) {
+//     Side side = this->getSideOfPiece(currPos);
+//     Piecetype p = this->getTypeOfPiece(currPos);
+//     if (side == Side::White) {
+//         switch (p) {
+//             case Piecetype::Pawn : this->actualPosOfWhitePieces.emplace(destPos, new Pawn(destPos, Side::White)); break;
+//             case Piecetype::Bishop : this->actualPosOfWhitePieces.emplace(destPos, new Bishop)
+//             case Piecetype::King :
+//             case Piecetype::Knight :
+//             case Piecetype::Queen :
+//             case Piecetype::Rook : 
+//         }
+//     }
+//     else if (side == Side::Black) {
+
+//     }
+// }
+
 bool Board::willMoveRenderSideInCheck(Side currentSide, std::pair<int, int> currentPos, std::pair<int, int> destPos) {
     if (currentSide == Side::White) {
         if (this->actualPosOfWhitePieces.at(currentPos)->getType() == Piecetype::King) {
@@ -790,17 +796,49 @@ bool Board::doesSideHaveMovesLeft(Side currentSide) {
     return false;
 }
 
+bool Board::isValidMove(std::pair<int,int> from, std::pair<int,int> to, Side side) {
+    std::vector<std::pair<int,int>> moves;
+    if (side == Side::White) {
+        if (this->actualPosOfWhitePieces.count(from) > 0) {
+            Piece* p = this->actualPosOfWhitePieces.at(from);
+            moves = p->getMoves(this);
+            for (auto move : moves) {
+                if (move.first == to.first && move.second == to.second) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+    else if (side == Side::Black) {
+        try {
+            Piece* p = this->actualPosOfBlackPieces.at(from);
+            moves = p->getMoves(this);
+            for (auto move : moves) {
+                if (move.first == to.first && move.second == to.second) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        catch (const std::string* e) {
+            return false;
+        }
+    }
+    return false;
+}
+
 bool Board::isValidCurrentPos(std::pair<int, int> currentPos, Side currentSide) {
     if (currentSide == Side::White) {
-        for (const auto& posPiecePairWhites : this->actualPosOfWhitePieces) {
-            if (posPiecePairWhites.first == currentPos) {
+        for (auto posPiecePairWhites : this->actualPosOfWhitePieces) {
+            if (posPiecePairWhites.first.first == currentPos.first && posPiecePairWhites.first.second == currentPos.second) {
                 return true;
             }
         }
     }
     else if (currentSide == Side::Black) {
-        for (const auto& posPiecePairBlacks : this->actualPosOfBlackPieces) {
-            if (posPiecePairBlacks.first == currentPos) {
+        for (auto posPiecePairBlacks : this->actualPosOfBlackPieces) {
+            if (posPiecePairBlacks.first.first == currentPos.first && posPiecePairBlacks.first.second == currentPos.second) {
                 return true;
             }
         }
@@ -810,18 +848,39 @@ bool Board::isValidCurrentPos(std::pair<int, int> currentPos, Side currentSide) 
 
 bool Board::isValidDestPos(std::pair<int, int> destPos, Side currentSide) {
     if (currentSide == Side::White) {
-        for (const auto& posPiecePairWhites : this->actualPosOfWhitePieces) {
-            for (int i = 0; i < posPiecePairWhites.second->getMoves(this).size(); i++) {
-                if (posPiecePairWhites.second->getMoves(this).at(i) == destPos) {
+        for (auto posPiecePairWhites : this->actualPosOfWhitePieces) {
+            std::vector<std::pair<int,int>> moves = posPiecePairWhites.second->getMoves(this);
+            for (auto move : moves) {
+                std::cout << move.first << "," << move.second << std::endl;
+            }
+            for (int i = 0; i < moves.size(); i++) {
+                if (moves.at(i).first == destPos.first && moves.at(i).second == destPos.second) {
                     return true;
                 }
             }
         }
+            // std::cout << posPiecePairWhites.second->toString() << std::endl;
+            // std::cout << posPiecePairWhites.second->getCoordinates().first << "," << posPiecePairWhites.second->getCoordinates().second << std::endl;
+            // std::vector<std::pair<int,int>> moves = posPiecePairWhites.second->getMoves(this);
+            // for (auto move : moves) {
+            //     std::cout << move.first << "," << move.second << std::endl;
+            // }
+            // for (int i = 0; i < moves.size(); i++) {
+            //     if (moves.at(i).first == destPos.first && moves.at(i).second == destPos.second) {
+            //         return true;
+            //     }
+            // }
     }
     else if (currentSide == Side::Black) {
-        for (const auto& posPiecePairBlacks : this->actualPosOfBlackPieces) {
-            for (int i = 0; i < posPiecePairBlacks.second->getMoves(this).size(); i++) {
-                if (posPiecePairBlacks.second->getMoves(this).at(i) == destPos) {
+        for (auto posPiecePairBlacks : this->actualPosOfBlackPieces) {
+            std::cout << posPiecePairBlacks.second->toString() << std::endl;
+            std::cout << posPiecePairBlacks.second->getCoordinates().first << "," << posPiecePairBlacks.second->getCoordinates().second << std::endl;
+            std::vector<std::pair<int,int>> moves = posPiecePairBlacks.second->getMoves(this);
+            for (auto move : moves) {
+                std::cout << move.first << "," << move.second << std::endl;
+            }
+            for (int i = 0; i < moves.size(); i++) {
+                if (moves.at(i).first == destPos.first && moves.at(i).second == destPos.second) {
                     return true;
                 }
             }
@@ -1049,6 +1108,10 @@ bool Board::canPieceMoveToDestPos(std::pair<int, int> currentPos, std::pair<int,
         }
     }
     // Check if the currentPos of the move is valid
+
+    // if(this->isValidMove(currentPos, destPos, currentSide)) {
+    //     return true;
+    // }
     if (!this->isValidCurrentPos(currentPos, currentSide)) {
         return false;
     }
