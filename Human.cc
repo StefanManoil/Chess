@@ -22,7 +22,7 @@ bool Human::player_move(Board *board) {
             coordinate1 = Conversion::toCoordinate(move_from);
             coordinate2 = Conversion::toCoordinate(move_to);
         }
-        catch (const string *msg){
+        catch (string msg){
             return false;
         }
 

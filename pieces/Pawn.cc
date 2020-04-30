@@ -51,7 +51,7 @@ std::vector<std::pair<int,int>> Pawn::getMoves(Board *board) {
     }
     else if (this->side == Side::White) {
         //White moving 1 space forward
-        move = std::make_pair(x, y-1);
+        move = std::make_pair(x - 1, y);
         if (checkMove(board, move)) {
             std::cout << "ADDING MOVE: " << move.first << "," << move.second << std::endl;
             moves.emplace_back(move);
