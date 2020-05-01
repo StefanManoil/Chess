@@ -231,7 +231,7 @@ void Board::print() {
               std::cout << actualPosOfBlackPieces.at(currentPair)->toString(); 
           }
           else {
-              std::cout << ((((i + j) % 2) == 0) ? " " : "-");
+               std::cout << ((((i + j) % 2) == 0) ? " " : "-");
           }
       }
       std::cout << std::endl;
@@ -409,7 +409,7 @@ BoardStatus Board::getStatusOfCurrentSide(Side currentSide) {
             if (posPiecePairBlacks.second->getType() == Piecetype::King) {
                 for (const auto& posPiecePairWhites : actualPosOfWhitePieces) {
                     for (int i = 0; i < posPiecePairWhites.second->getMoves(this).size(); i++) {
-                        if (posPiecePairBlacks.second->getMoves(this).at(i) == posPiecePairWhites.first) {
+                        if (posPiecePairWhites.second->getMoves(this).at(i) == posPiecePairBlacks.first) {
                             return BoardStatus::BlackCheck;
                         }
                     }
@@ -773,6 +773,7 @@ bool Board::willMoveRenderSideInCheck(Side currentSide, std::pair<int, int> curr
 }
 
 bool Board::doesSideHaveMovesLeft(Side currentSide) {
+  std::cout << "Does Side has moves left" << std::endl;
     if (currentSide == Side::White) {
         for (const auto& posPiecePairWhites : this->actualPosOfWhitePieces) {
             for (int i = 0; i < posPiecePairWhites.second->getMoves(this).size(); i++) {
@@ -787,7 +788,7 @@ bool Board::doesSideHaveMovesLeft(Side currentSide) {
         for (const auto& posPiecePairBlacks : this->actualPosOfBlackPieces) {
             for (int i = 0; i < posPiecePairBlacks.second->getMoves(this).size(); i++) {
                 if (this->willMoveRenderSideInCheck
-                   (Side::White, posPiecePairBlacks.first, posPiecePairBlacks.second->getMoves(this).at(i)) == false) {
+                   (Side::Black, posPiecePairBlacks.first, posPiecePairBlacks.second->getMoves(this).at(i)) == false) {
                        return true;
                 }
             }
@@ -1040,6 +1041,13 @@ void Board::emptyMove(std::pair<int, int> currentPos, std::pair<int, int> destPo
 }
 
 bool Board::canPieceMoveToDestPos(std::pair<int, int> currentPos, std::pair<int, int> destPos, Side currentSide) {
+  std::cout << "Reached canPieceMoveToDestPos" << std::endl;
+  if (currentSide == Side::White) {
+    std::cout << "Current Side is White" << std::endl;
+  }
+  else if (currentSide == Side::Black){
+    std::cout << "Current Side is Black" << std::endl;
+  }
     // maybe keep a vector of the moves the piece at the currentPos can make
     // restrict it further based on checks
     // see if this vector contains destPos and only then will the move be valid and return true
@@ -1070,9 +1078,13 @@ bool Board::canPieceMoveToDestPos(std::pair<int, int> currentPos, std::pair<int,
         //    pieces and see if any of their moves is equivalent/can attack the black piece.
 
         // 1)
+        std::cout << "Black or White Check" << std::endl;
         canKingMoveToSafePos = this->canKingInCheckMoveToSafePos(currentSide);
+        std::cout << "Made past canKingInCheckMoveToSafePos" << std::endl;
         canPiecesBlockEnemyPieces = this->canFriendlyPiecesBlockEnemyPieces(currentSide);
+        std::cout << "Made past canFriendlyPiecesBlockEnemyPieces" << std::endl;
         canPiecesDestroyEnemyPiecesAttackingKing = this->canFriendlyPiecesDestroyEnemyAttackingKing(currentSide);
+        std::cout << "Made past canFriendlyPiecesDestroyEnemyAttackingKing" << std::endl;
         if (!canKingMoveToSafePos && !canPiecesBlockEnemyPieces && !canPiecesDestroyEnemyPiecesAttackingKing) {
             if (currentSide == Side::White) {
                 this->currentBoardStatus = BoardStatus::WhiteCheckmate;
@@ -1096,7 +1108,9 @@ bool Board::canPieceMoveToDestPos(std::pair<int, int> currentPos, std::pair<int,
     // Thus we can return false as the white player's move cannot be made and when it is the opposition's
     // turn they can check the same thing as well as if whiteSideNoMoves is true and if so,
     // we have reached a Stalemate.
+    std::cout << "one" << std::endl;
     if (currentSide == Side::White) {
+      std::cout << "White side has moves left" << std::endl;
         this->whiteSideNoMoves = this->doesSideHaveMovesLeft(currentSide);
         if (this->blackSideNoMoves && this->whiteSideNoMoves) {
             this->currentBoardStatus = BoardStatus::Stalemate;
@@ -1105,6 +1119,7 @@ bool Board::canPieceMoveToDestPos(std::pair<int, int> currentPos, std::pair<int,
         }
     }
     else if (currentSide == Side::Black) {
+      std::cout << "Black side has moves left" << std::endl;
         this->blackSideNoMoves = this->doesSideHaveMovesLeft(currentSide);
         if (this->whiteSideNoMoves && this->blackSideNoMoves) {
             this->currentBoardStatus = BoardStatus::Stalemate;
@@ -1112,6 +1127,7 @@ bool Board::canPieceMoveToDestPos(std::pair<int, int> currentPos, std::pair<int,
             return false;
         }
     }
+    std::cout << "two" << std::endl;
     // Check if the currentPos of the move is valid
 
     // if(this->isValidMove(currentPos, destPos, currentSide)) {
@@ -1126,7 +1142,7 @@ bool Board::canPieceMoveToDestPos(std::pair<int, int> currentPos, std::pair<int,
       std::cout << "Not Valid destPos" << std::endl;
       return false;
     }
-
+    std::cout << "three" << std::endl;
     // Based on the move white wants to make, we must check if the move will render the king in check.
     // If it does this is illegal and not allowed and we must return false.
     if (this->willMoveRenderSideInCheck(currentSide, currentPos, destPos)) {
@@ -1140,12 +1156,15 @@ bool Board::canPieceMoveToDestPos(std::pair<int, int> currentPos, std::pair<int,
         // If we are capturing an enemy piece, delete the piece being attacked remove from appropriate map
         // and place the attacking friendly piece in the position the enemy piece was in.
         // We can also check for en passant at this point if a pawn is making the move.
+        std::cout << "Capture Move" << std::endl;
         this->captureMove(currentPos, destPos, currentSide);
     }
     else {
         // If we are moving to an empty piece then we check for pawn promotion and castling, and if this 
         // does not happen we simply move the current piece to its destPos
+        std::cout << "Empty Move" << std::endl;
         this->emptyMove(currentPos, destPos, currentSide);
 }
+    std::cout << "Wtf" << std::endl;
     return true;
 }

@@ -23,6 +23,7 @@ bool Human::player_move(Board *board) {
             coordinate2 = Conversion::toCoordinate(move_to);
         }
         catch (string msg){
+            std::cout << "hit exception: " << msg << std::endl; 
             return false;
         }
 
