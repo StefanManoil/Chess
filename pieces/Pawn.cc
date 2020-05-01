@@ -18,21 +18,21 @@ std::vector<std::pair<int,int>> Pawn::getMoves(Board *board) {
 
     if (this->side == Side::Black) {
         //Black moving 1 space forward
-        move = std::make_pair(x, y + 1);
+        move = std::make_pair(x + 1, y);
         if (checkMove(board, move)) {
             std::cout << "ADDING MOVE: " << move.first << "," << move.second << std::endl;
             moves.emplace_back(move);
         }
         if (!this->hasMoved()) {
             //Black moving 2 space forward
-            move = std::make_pair(x, y + 2);
+            move = std::make_pair(x + 2, y);
             if (checkMove(board, move)) {
                 std::cout << "ADDING MOVE: " << move.first << "," << move.second << std::endl;
                 moves.emplace_back(move);
             }
         }
         //Black moving forward and right
-        move = std::make_pair(x+1, y+1);
+        move = std::make_pair(x + 1, y + 1);
         if (checkMove(board, move)) {
             if (board->getSideOfPiece(move) != Side::None) {
                 std::cout << "ADDING MOVE: " << move.first << "," << move.second << std::endl;
@@ -41,7 +41,7 @@ std::vector<std::pair<int,int>> Pawn::getMoves(Board *board) {
         }
         
         //Black moving forward and left
-        move = std::make_pair(x-1, y+1);
+        move = std::make_pair(x + 1, y - 1);
         if (checkMove(board, move)) {
             if (board->getSideOfPiece(move) != Side::None) {
                 std::cout << "ADDING MOVE: " << move.first << "," << move.second << std::endl;
@@ -59,7 +59,7 @@ std::vector<std::pair<int,int>> Pawn::getMoves(Board *board) {
 
         //White moving 2 space forward
         if (!this->hasMoved()) {
-            move = std::make_pair(x, y-2);
+            move = std::make_pair(x - 2, y);
             if (checkMove(board, move)) {
                 std::cout << "ADDING MOVE: " << move.first << "," << move.second << std::endl;
                 moves.emplace_back(move);
@@ -67,7 +67,7 @@ std::vector<std::pair<int,int>> Pawn::getMoves(Board *board) {
         }
 
         //White moving forward and right
-        move = std::make_pair(x+1, y-1);
+        move = std::make_pair(x - 1, y + 1);
         if (checkMove(board, move)) {
             if (board->getSideOfPiece(move) != Side::None) {
                 std::cout << "ADDING MOVE: " << move.first << "," << move.second << std::endl;
@@ -76,7 +76,7 @@ std::vector<std::pair<int,int>> Pawn::getMoves(Board *board) {
         }
 
         //White moving forward and left
-        move = std::make_pair(x-1, y-1);
+        move = std::make_pair(x - 1, y - 1);
         if (checkMove(board, move)) {
             if (board->getSideOfPiece(move) != Side::None) {
                 std::cout << "ADDING MOVE: " << move.first << "," << move.second << std::endl;

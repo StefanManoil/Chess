@@ -66,31 +66,31 @@ std::vector<std::pair<int,int>> Piece::getStraightMoves(Board *board) {
     int y = this->coordinates.second;
 
     //up straight
-    move = std::make_pair(x, y-1);
+    move = std::make_pair(x - 1, y);
     while(checkMove(board, move)) {
         moves.emplace_back(move);
-        move = std::make_pair(move.first, move.second-1);
+        move = std::make_pair(move.first - 1, move.second);
     }
 
     //down straight
-    move = std::make_pair(x, y+1);
+    move = std::make_pair(x + 1, y);
     while(checkMove(board, move)) {
         moves.emplace_back(move);
-        move = std::make_pair(move.first, move.second+1);
+        move = std::make_pair(move.first + 1, move.second);
     }
 
     //right straight
-    move = std::make_pair(x+1, y);
+    move = std::make_pair(x, y + 1);
     while(checkMove(board, move)) {
         moves.emplace_back(move);
-        move = std::make_pair(move.first+1, move.second);
+        move = std::make_pair(move.first, move.second + 1);
     }
 
     //left straight
-    move = std::make_pair(x-1, y);
+    move = std::make_pair(x, y - 1);
     while(checkMove(board, move)) {
         moves.emplace_back(move);
-        move = std::make_pair(move.first-1, move.second);
+        move = std::make_pair(move.first, move.second - 1);
     }
 
     return moves;
@@ -104,31 +104,31 @@ std::vector<std::pair<int,int>> Piece::getDiagonalMoves(Board *board) {
     int y = this->coordinates.second;
 
     //up right
-    move = std::make_pair(x+1, y-1);
+    move = std::make_pair(x - 1, y + 1);
     while(checkMove(board, move)) {
         moves.emplace_back(move);
-        move = std::make_pair(move.first+1, move.second-1);
+        move = std::make_pair(move.first - 1, move.second + 1);
     }
 
     //up left
-    move = std::make_pair(x-1, y-1);
+    move = std::make_pair(x - 1, y - 1);
     while(checkMove(board, move)) {
         moves.emplace_back(move);
-        move = std::make_pair(move.first-1, move.second-1);
+        move = std::make_pair(move.first - 1, move.second - 1);
     }
 
     //down right
-    move = std::make_pair(x+1, y+1);
+    move = std::make_pair(x + 1, y + 1);
     while(checkMove(board, move)) {
         moves.emplace_back(move);
-        move = std::make_pair(move.first-1, move.second-1);
+        move = std::make_pair(move.first + 1, move.second + 1);
     }
 
     //down left
-    move = std::make_pair(x-1, y+1);
+    move = std::make_pair(x + 1, y - 1);
     while(checkMove(board, move)) {
         moves.emplace_back(move);
-        move = std::make_pair(move.first-1, move.second+1);
+        move = std::make_pair(move.first + 1, move.second - 1);
     }
 
     return moves;
