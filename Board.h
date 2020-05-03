@@ -38,8 +38,8 @@ class Board {
         bool canFriendlyPiecesDestroyEnemyAttackingKing(Side currentSide);
         bool doesSideHaveMovesLeft(Side currentSide);
         bool isValidCurrentPos(std::pair<int, int> currentPos, Side currentSide);
-        bool isValidDestPos(std::pair<int, int> destPos, Side currentSide);
-        bool isCapturingMove(std::pair<int, int> destPos, Side currentSide);
+        bool isValidDestPos(std::pair<int, int> currentPos, std::pair<int, int> destPos, Side currentSide);
+        //bool isCapturingMove(std::pair<>std::pair<int, int> destPos, Side currentSide);
         void captureMove(std::pair<int, int> currentPos, std::pair<int, int> destPos, Side currentSide);
         void emptyMove(std::pair<int, int> currentPos, std::pair<int, int> destPos, Side currentSide);
     public:

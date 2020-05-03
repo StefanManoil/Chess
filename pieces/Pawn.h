@@ -5,7 +5,7 @@
 
 class Pawn: public Piece {
     public:
-        Pawn(std::pair<int,int> coordinates, Side side): Piece(coordinates, side) {};
+        Pawn(std::pair<int,int> coordinates, bool moved, Side side): Piece(coordinates, moved, side) {};
         Piecetype getType() override;
         std::vector<std::pair<int,int>> getMoves(Board *board) override;
 };

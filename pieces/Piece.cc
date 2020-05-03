@@ -48,6 +48,20 @@ bool Piece::hasMoved() {
     return this->moved;
 }
 
+void Piece::setMoved(bool val) {
+    this->moved = val;
+}
+
+bool Piece::isCoordinateOnBoard(std::pair<int,int> coordinate){
+  if (coordinate.first < 0 || coordinate.first > 7) {
+    return false;
+  }
+  else if(coordinate.second < 0 || coordinate.second > 7){
+    return false;
+  }
+  return true;
+}
+
 bool Piece::checkMove(Board *board, std::pair<int,int> move) {
     if ((move.first >= 0 && move.first <= 7) && (move.second >= 0 && move.second <= 7)) {
         Side pieceAtMove = board->getSideOfPiece(move);

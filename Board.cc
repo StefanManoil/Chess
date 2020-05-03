@@ -142,55 +142,55 @@ void Board::setPieceInSetup(std::pair<int, int> pos, Side side, Piecetype piecet
         if (piecetype == Piecetype::Rook) {
             this->removePieceInSetup(pos);
             if (side == Side::White) {
-                this->actualPosOfWhitePieces.emplace(pos, new Rook(pos, side));
+                this->actualPosOfWhitePieces.emplace(pos, new Rook(pos, false, side));
             }
             else if (side == Side::Black) {
-                this->actualPosOfBlackPieces.emplace(pos, new Rook(pos, side));
+                this->actualPosOfBlackPieces.emplace(pos, new Rook(pos, false, side));
             }
         }
         else if (piecetype == Piecetype::Knight) {
             this->removePieceInSetup(pos);
             if (side == Side::White) {
-                this->actualPosOfWhitePieces.emplace(pos, new Knight(pos, side));
+                this->actualPosOfWhitePieces.emplace(pos, new Knight(pos, false, side));
             }
             else if (side == Side::Black) {
-                this->actualPosOfBlackPieces.emplace(pos, new Knight(pos, side));
+                this->actualPosOfBlackPieces.emplace(pos, new Knight(pos, false, side));
             }
         }
         else if (piecetype == Piecetype::Bishop) {
             this->removePieceInSetup(pos);
             if (side == Side::White) {
-                this->actualPosOfWhitePieces.emplace(pos, new Bishop(pos, side));
+                this->actualPosOfWhitePieces.emplace(pos, new Bishop(pos, false, side));
             }
             else if (side == Side::Black) {
-                this->actualPosOfBlackPieces.emplace(pos, new Bishop(pos, side));
+                this->actualPosOfBlackPieces.emplace(pos, new Bishop(pos, false, side));
             }
         }
         else if (piecetype == Piecetype::King) {
             this->removePieceInSetup(pos);
             if (side == Side::White) {
-                this->actualPosOfWhitePieces.emplace(pos, new King(pos, side));
+                this->actualPosOfWhitePieces.emplace(pos, new King(pos, false, side));
             }
             else if (side == Side::Black) {
-                this->actualPosOfBlackPieces.emplace(pos, new King(pos, side));
+                this->actualPosOfBlackPieces.emplace(pos, new King(pos, false, side));
             }
         }
         else if (piecetype == Piecetype::Queen) {
             this->removePieceInSetup(pos);
             if (side == Side::White) {
-                this->actualPosOfWhitePieces.emplace(pos, new Queen(pos, side));
+                this->actualPosOfWhitePieces.emplace(pos, new Queen(pos, false, side));
             }
             else if (side == Side::Black) {
-                this->actualPosOfBlackPieces.emplace(pos, new Queen(pos, side));
+                this->actualPosOfBlackPieces.emplace(pos, new Queen(pos, false, side));
             }
         }
         else if (piecetype == Piecetype::Pawn) {
             this->removePieceInSetup(pos);
             if (side == Side::White) {
-                this->actualPosOfWhitePieces.emplace(pos, new Pawn(pos, side));
+                this->actualPosOfWhitePieces.emplace(pos, new Pawn(pos, false, side));
             }
             else if (side == Side::Black) {
-                this->actualPosOfBlackPieces.emplace(pos, new Pawn(pos, side));
+                this->actualPosOfBlackPieces.emplace(pos, new Pawn(pos, false, side));
             }
         }
     }
@@ -359,31 +359,31 @@ void Board::resetBoard() {
     }
     this->actualPosOfWhitePieces.clear();
     // make black first row
-    this->actualPosOfBlackPieces.emplace(std::make_pair(0, 0), new Rook(std::make_pair(0, 0), Side::Black));
-    this->actualPosOfBlackPieces.emplace(std::make_pair(0, 1), new Knight(std::make_pair(0, 1), Side::Black));
-    this->actualPosOfBlackPieces.emplace(std::make_pair(0, 2), new Bishop(std::make_pair(0, 2), Side::Black));
-    this->actualPosOfBlackPieces.emplace(std::make_pair(0, 3), new Queen(std::make_pair(0, 3), Side::Black));
-    this->actualPosOfBlackPieces.emplace(std::make_pair(0, 4), new King(std::make_pair(0, 4), Side::Black));
-    this->actualPosOfBlackPieces.emplace(std::make_pair(0, 5), new Bishop(std::make_pair(0, 5), Side::Black));
-    this->actualPosOfBlackPieces.emplace(std::make_pair(0, 6), new Knight(std::make_pair(0, 6), Side::Black));
-    this->actualPosOfBlackPieces.emplace(std::make_pair(0, 7), new Rook(std::make_pair(0, 7), Side::Black));
+    this->actualPosOfBlackPieces.emplace(std::make_pair(0, 0), new Rook(std::make_pair(0, 0), false, Side::Black));
+    this->actualPosOfBlackPieces.emplace(std::make_pair(0, 1), new Knight(std::make_pair(0, 1), false, Side::Black));
+    this->actualPosOfBlackPieces.emplace(std::make_pair(0, 2), new Bishop(std::make_pair(0, 2), false, Side::Black));
+    this->actualPosOfBlackPieces.emplace(std::make_pair(0, 3), new Queen(std::make_pair(0, 3), false, Side::Black));
+    this->actualPosOfBlackPieces.emplace(std::make_pair(0, 4), new King(std::make_pair(0, 4), false, Side::Black));
+    this->actualPosOfBlackPieces.emplace(std::make_pair(0, 5), new Bishop(std::make_pair(0, 5), false, Side::Black));
+    this->actualPosOfBlackPieces.emplace(std::make_pair(0, 6), new Knight(std::make_pair(0, 6), false, Side::Black));
+    this->actualPosOfBlackPieces.emplace(std::make_pair(0, 7), new Rook(std::make_pair(0, 7), false, Side::Black));
     // make black pawn row
     for (int i = 0; i < 8; i++) {
-        this->actualPosOfBlackPieces.emplace(std::make_pair(1, i), new Pawn(std::make_pair(1, i), Side::Black));
+        this->actualPosOfBlackPieces.emplace(std::make_pair(1, i), new Pawn(std::make_pair(1, i), false, Side::Black));
     }
     // make white pawn row
     for (int i = 0; i < 8; i++) {
-        this->actualPosOfWhitePieces.emplace(std::make_pair(6, i), new Pawn(std::make_pair(6, i), Side::White));
+        this->actualPosOfWhitePieces.emplace(std::make_pair(6, i), new Pawn(std::make_pair(6, i), false, Side::White));
     }
     // make white last row
-    this->actualPosOfWhitePieces.emplace(std::make_pair(7, 0), new Rook(std::make_pair(7, 0), Side::White));
-    this->actualPosOfWhitePieces.emplace(std::make_pair(7, 1), new Knight(std::make_pair(7, 1), Side::White));
-    this->actualPosOfWhitePieces.emplace(std::make_pair(7, 2), new Bishop(std::make_pair(7, 2), Side::White));
-    this->actualPosOfWhitePieces.emplace(std::make_pair(7, 3), new Queen(std::make_pair(7, 3), Side::White));
-    this->actualPosOfWhitePieces.emplace(std::make_pair(7, 4), new King(std::make_pair(7, 4), Side::White));
-    this->actualPosOfWhitePieces.emplace(std::make_pair(7, 5), new Bishop(std::make_pair(7, 5), Side::White));
-    this->actualPosOfWhitePieces.emplace(std::make_pair(7, 6), new Knight(std::make_pair(7, 6), Side::White));
-    this->actualPosOfWhitePieces.emplace(std::make_pair(7, 7), new Rook(std::make_pair(7, 7), Side::White));
+    this->actualPosOfWhitePieces.emplace(std::make_pair(7, 0), new Rook(std::make_pair(7, 0), false, Side::White));
+    this->actualPosOfWhitePieces.emplace(std::make_pair(7, 1), new Knight(std::make_pair(7, 1), false, Side::White));
+    this->actualPosOfWhitePieces.emplace(std::make_pair(7, 2), new Bishop(std::make_pair(7, 2), false, Side::White));
+    this->actualPosOfWhitePieces.emplace(std::make_pair(7, 3), new Queen(std::make_pair(7, 3), false, Side::White));
+    this->actualPosOfWhitePieces.emplace(std::make_pair(7, 4), new King(std::make_pair(7, 4), false, Side::White));
+    this->actualPosOfWhitePieces.emplace(std::make_pair(7, 5), new Bishop(std::make_pair(7, 5), false, Side::White));
+    this->actualPosOfWhitePieces.emplace(std::make_pair(7, 6), new Knight(std::make_pair(7, 6), false, Side::White));
+    this->actualPosOfWhitePieces.emplace(std::make_pair(7, 7), new Rook(std::make_pair(7, 7), false, Side::White));
 }
 
 BoardStatus Board::getStatusField() {
@@ -626,14 +626,16 @@ bool Board::canFriendlyPiecesDestroyEnemyAttackingKing(Side currentSide) {
 
 bool Board::willMoveRenderSideInCheck(Side currentSide, std::pair<int, int> currentPos, std::pair<int, int> destPos) {
     if (currentSide == Side::White) {
+        bool hasPieceMoved = this->actualPosOfWhitePieces.at(currentPos)->hasMoved();
         if (this->actualPosOfWhitePieces.at(currentPos)->getType() == Piecetype::King) {
-            this->actualPosOfWhitePieces.emplace(destPos, new King(destPos, Side::White));
+            this->actualPosOfWhitePieces.emplace(destPos, new King(destPos, true, Side::White));
             delete this->actualPosOfWhitePieces.at(currentPos);
             this->actualPosOfWhitePieces.at(currentPos) = nullptr;
             this->actualPosOfWhitePieces.erase(currentPos);
             for (const auto& posPiecePairBlacks : this->actualPosOfBlackPieces) {
                 for (int i = 0; i < posPiecePairBlacks.second->getMoves(this).size(); i++) {
                     if (posPiecePairBlacks.second->getMoves(this).at(i) == destPos) {
+                        std::cout << "WhiteKingMoveRenderSideInCheck" << std::endl;
                         return true; // One of the enemy pieces has a move that can check the proposed positon of friendly king
                     }
                 }
@@ -641,24 +643,25 @@ bool Board::willMoveRenderSideInCheck(Side currentSide, std::pair<int, int> curr
             delete this->actualPosOfWhitePieces.at(destPos);
             this->actualPosOfWhitePieces.at(destPos) = nullptr;
             this->actualPosOfWhitePieces.erase(destPos);
-            this->actualPosOfWhitePieces.emplace(currentPos, new King(currentPos, Side::White));
+            this->actualPosOfWhitePieces.emplace(currentPos, new King(currentPos, hasPieceMoved, Side::White));
+            // ^^ should moved flag be what it is 
         }
         else {
             Piecetype typeOfPieceAtCurrentPos = this->actualPosOfWhitePieces.at(currentPos)->getType();
             if (typeOfPieceAtCurrentPos == Piecetype::Rook) {
-                this->actualPosOfWhitePieces.emplace(destPos, new Rook(destPos, Side::White));
+                this->actualPosOfWhitePieces.emplace(destPos, new Rook(destPos, true, Side::White));
             }
             else if (typeOfPieceAtCurrentPos == Piecetype::Knight) {
-                this->actualPosOfWhitePieces.emplace(destPos, new Knight(destPos, Side::White));
+                this->actualPosOfWhitePieces.emplace(destPos, new Knight(destPos, true, Side::White));
             }
             else if (typeOfPieceAtCurrentPos == Piecetype::Bishop) {
-                this->actualPosOfWhitePieces.emplace(destPos, new Bishop(destPos, Side::White));
+                this->actualPosOfWhitePieces.emplace(destPos, new Bishop(destPos, true, Side::White));
             }
             else if (typeOfPieceAtCurrentPos == Piecetype::Queen) {
-                this->actualPosOfWhitePieces.emplace(destPos, new Queen(destPos, Side::White));
+                this->actualPosOfWhitePieces.emplace(destPos, new Queen(destPos, true, Side::White));
             }
             else if (typeOfPieceAtCurrentPos == Piecetype::Pawn) {
-                this->actualPosOfWhitePieces.emplace(destPos, new Pawn(destPos, Side::White));
+                this->actualPosOfWhitePieces.emplace(destPos, new Pawn(destPos, true, Side::White));
             }
             delete this->actualPosOfWhitePieces.at(currentPos);
             this->actualPosOfWhitePieces.at(currentPos) = nullptr;
@@ -673,6 +676,7 @@ bool Board::willMoveRenderSideInCheck(Side currentSide, std::pair<int, int> curr
             for (const auto& posPiecePairBlacks : this->actualPosOfBlackPieces) {
                 for (int i = 0; i < posPiecePairBlacks.second->getMoves(this).size(); i++) {
                     if (posPiecePairBlacks.second->getMoves(this).at(i) == friendlyKingPos) {
+                        std::cout << "WhiteNotKingMoveRenderSideInCheck" << std::endl;
                         return true; // One of the enemy pieces has a move that can check the positon of friendly king
                     }
                 }
@@ -681,56 +685,60 @@ bool Board::willMoveRenderSideInCheck(Side currentSide, std::pair<int, int> curr
             this->actualPosOfWhitePieces.at(destPos) = nullptr;
             this->actualPosOfWhitePieces.erase(destPos);
             if (typeOfPieceAtCurrentPos == Piecetype::Rook) {
-              this->actualPosOfWhitePieces.emplace(currentPos, new Rook(currentPos, Side::White));
+              this->actualPosOfWhitePieces.emplace(currentPos, new Rook(currentPos, hasPieceMoved, Side::White));
+              // ^^ should moved flag be what it is
             }
             else if (typeOfPieceAtCurrentPos == Piecetype::Knight) {
-              this->actualPosOfWhitePieces.emplace(currentPos, new Knight(currentPos, Side::White));
+              this->actualPosOfWhitePieces.emplace(currentPos, new Knight(currentPos, hasPieceMoved, Side::White));
             }
             else if (typeOfPieceAtCurrentPos == Piecetype::Bishop) {
-              this->actualPosOfWhitePieces.emplace(currentPos, new Bishop(currentPos, Side::White));
+              this->actualPosOfWhitePieces.emplace(currentPos, new Bishop(currentPos, hasPieceMoved, Side::White));
             }
             else if (typeOfPieceAtCurrentPos == Piecetype::Queen) {
-              this->actualPosOfWhitePieces.emplace(currentPos, new Queen(currentPos, Side::White));
+              this->actualPosOfWhitePieces.emplace(currentPos, new Queen(currentPos, hasPieceMoved, Side::White));
             }
             else if (typeOfPieceAtCurrentPos == Piecetype::Pawn) {
-              this->actualPosOfWhitePieces.emplace(currentPos, new Pawn(currentPos, Side::White));
+              this->actualPosOfWhitePieces.emplace(currentPos, new Pawn(currentPos, hasPieceMoved, Side::White));
             }
         }
     }
     else if (currentSide == Side::Black) {
+        bool hasPieceMoved = this->actualPosOfBlackPieces.at(currentPos)->hasMoved();
         if (this->actualPosOfBlackPieces.at(currentPos)->getType() == Piecetype::King) {
-            this->actualPosOfBlackPieces.emplace(destPos, new King(destPos, Side::Black));
+            this->actualPosOfBlackPieces.emplace(destPos, new King(destPos, true, Side::Black));
             delete this->actualPosOfBlackPieces.at(currentPos);
             this->actualPosOfBlackPieces.at(currentPos) = nullptr;
             this->actualPosOfBlackPieces.erase(currentPos);
             for (const auto& posPiecePairWhites : this->actualPosOfWhitePieces) {
                 for (int i = 0; i < posPiecePairWhites.second->getMoves(this).size(); i++) {
                     if (posPiecePairWhites.second->getMoves(this).at(i) == destPos) {
-                        delete this->actualPosOfBlackPieces.at(destPos);
-                        this->actualPosOfBlackPieces.at(destPos) = nullptr;
-                        this->actualPosOfBlackPieces.erase(destPos);
-                        this->actualPosOfBlackPieces.emplace(currentPos, new King(currentPos, Side::Black));
+                        std::cout << "BlackKingMoveRenderSideInCheck" << std::endl;
                         return true; // One of the enemy pieces has a move that can check the proposed positon of friendly king
                     }
                 }
             }
+            delete this->actualPosOfBlackPieces.at(destPos);
+            this->actualPosOfBlackPieces.at(destPos) = nullptr;
+            this->actualPosOfBlackPieces.erase(destPos);
+            this->actualPosOfBlackPieces.emplace(currentPos, new King(currentPos, hasPieceMoved, Side::Black));
+            // ^^ should moved flag be what it is
         }
         else {
             Piecetype typeOfPieceAtCurrentPos = this->actualPosOfBlackPieces.at(currentPos)->getType();
             if (typeOfPieceAtCurrentPos == Piecetype::Rook) {
-                this->actualPosOfBlackPieces.emplace(destPos, new Rook(destPos, Side::Black));
+                this->actualPosOfBlackPieces.emplace(destPos, new Rook(destPos, true, Side::Black));
             }
             else if (typeOfPieceAtCurrentPos == Piecetype::Knight) {
-                this->actualPosOfBlackPieces.emplace(destPos, new Knight(destPos, Side::Black));
+                this->actualPosOfBlackPieces.emplace(destPos, new Knight(destPos, true, Side::Black));
             }
             else if (typeOfPieceAtCurrentPos == Piecetype::Bishop) {
-                this->actualPosOfBlackPieces.emplace(destPos, new Bishop(destPos, Side::Black));
+                this->actualPosOfBlackPieces.emplace(destPos, new Bishop(destPos, true, Side::Black));
             }
             else if (typeOfPieceAtCurrentPos == Piecetype::Queen) {
-                this->actualPosOfBlackPieces.emplace(destPos, new Queen(destPos, Side::Black));
+                this->actualPosOfBlackPieces.emplace(destPos, new Queen(destPos, true, Side::Black));
             }
             else if (typeOfPieceAtCurrentPos == Piecetype::Pawn) {
-                this->actualPosOfBlackPieces.emplace(destPos, new Pawn(destPos, Side::Black));
+                this->actualPosOfBlackPieces.emplace(destPos, new Pawn(destPos, true, Side::Black));
             }
             delete this->actualPosOfBlackPieces.at(currentPos);
             this->actualPosOfBlackPieces.at(currentPos) = nullptr;
@@ -745,27 +753,30 @@ bool Board::willMoveRenderSideInCheck(Side currentSide, std::pair<int, int> curr
             for (const auto& posPiecePairWhites : this->actualPosOfWhitePieces) {
                 for (int i = 0; i < posPiecePairWhites.second->getMoves(this).size(); i++) {
                     if (posPiecePairWhites.second->getMoves(this).at(i) == friendlyKingPos) {
-                        delete this->actualPosOfBlackPieces.at(destPos);
-                        this->actualPosOfBlackPieces.at(destPos) = nullptr;
-                        this->actualPosOfBlackPieces.erase(destPos);
-                        if (typeOfPieceAtCurrentPos == Piecetype::Rook) {
-                            this->actualPosOfBlackPieces.emplace(currentPos, new Rook(currentPos, Side::Black));
-                        }
-                        else if (typeOfPieceAtCurrentPos == Piecetype::Knight) {
-                            this->actualPosOfBlackPieces.emplace(currentPos, new Knight(currentPos, Side::Black));
-                        }
-                        else if (typeOfPieceAtCurrentPos == Piecetype::Bishop) {
-                            this->actualPosOfBlackPieces.emplace(currentPos, new Bishop(currentPos, Side::Black));
-                        }
-                        else if (typeOfPieceAtCurrentPos == Piecetype::Queen) {
-                            this->actualPosOfBlackPieces.emplace(currentPos, new Queen(currentPos, Side::Black));
-                        }
-                        else if (typeOfPieceAtCurrentPos == Piecetype::Pawn) {
-                            this->actualPosOfBlackPieces.emplace(currentPos, new Pawn(currentPos, Side::Black));
-                        }
+                        std::cout << "WhiteNotKingMoveRenderSideInCheck" << std::endl;
                         return true; // One of the enemy pieces has a move that can check the positon of friendly king
                     }
                 }
+            }
+            //
+            delete this->actualPosOfBlackPieces.at(destPos);
+            this->actualPosOfBlackPieces.at(destPos) = nullptr;
+            this->actualPosOfBlackPieces.erase(destPos);
+            if (typeOfPieceAtCurrentPos == Piecetype::Rook) {
+                this->actualPosOfBlackPieces.emplace(currentPos, new Rook(currentPos, hasPieceMoved, Side::Black));
+                // ^^ should moved flag be what it is
+            }
+            else if (typeOfPieceAtCurrentPos == Piecetype::Knight) {
+                this->actualPosOfBlackPieces.emplace(currentPos, new Knight(currentPos, hasPieceMoved, Side::Black));
+            }
+            else if (typeOfPieceAtCurrentPos == Piecetype::Bishop) {
+                this->actualPosOfBlackPieces.emplace(currentPos, new Bishop(currentPos, hasPieceMoved, Side::Black));
+            }
+            else if (typeOfPieceAtCurrentPos == Piecetype::Queen) {
+                this->actualPosOfBlackPieces.emplace(currentPos, new Queen(currentPos, hasPieceMoved, Side::Black));
+            }
+            else if (typeOfPieceAtCurrentPos == Piecetype::Pawn) {
+                this->actualPosOfBlackPieces.emplace(currentPos, new Pawn(currentPos, hasPieceMoved, Side::Black));
             }
         }
     }
@@ -794,6 +805,7 @@ bool Board::doesSideHaveMovesLeft(Side currentSide) {
             }
         }
     }
+    std::cout << "false doesSideHaveMovesLeft" << std::endl;
     return false;
 }
 
@@ -849,61 +861,37 @@ bool Board::isValidCurrentPos(std::pair<int, int> currentPos, Side currentSide) 
     return false;
 }
 
-bool Board::isValidDestPos(std::pair<int, int> destPos, Side currentSide) {
+bool Board::isValidDestPos(std::pair<int, int> currentPos, std::pair<int, int> destPos, Side currentSide) {
     if (currentSide == Side::White) {
-        for (auto posPiecePairWhites : this->actualPosOfWhitePieces) {
-            std::vector<std::pair<int,int>> moves = posPiecePairWhites.second->getMoves(this);
-            for (auto move : moves) {
-                std::cout << move.first << "," << move.second << std::endl;
-            }
-            for (int i = 0; i < moves.size(); i++) {
-                if (moves.at(i).first == destPos.first && moves.at(i).second == destPos.second) {
-                    return true;
-                }
+        for (int i = 0; i < this->actualPosOfWhitePieces.at(currentPos)->getMoves(this).size(); i++) {
+            if (this->actualPosOfWhitePieces.at(currentPos)->getMoves(this).at(i) == destPos) {
+                return true;
             }
         }
-            // std::cout << posPiecePairWhites.second->toString() << std::endl;
-            // std::cout << posPiecePairWhites.second->getCoordinates().first << "," << posPiecePairWhites.second->getCoordinates().second << std::endl;
-            // std::vector<std::pair<int,int>> moves = posPiecePairWhites.second->getMoves(this);
-            // for (auto move : moves) {
-            //     std::cout << move.first << "," << move.second << std::endl;
-            // }
-            // for (int i = 0; i < moves.size(); i++) {
-            //     if (moves.at(i).first == destPos.first && moves.at(i).second == destPos.second) {
-            //         return true;
-            //     }
-            // }
     }
     else if (currentSide == Side::Black) {
-        for (auto posPiecePairBlacks : this->actualPosOfBlackPieces) {
-            std::cout << posPiecePairBlacks.second->toString() << std::endl;
-            std::cout << posPiecePairBlacks.second->getCoordinates().first << "," << posPiecePairBlacks.second->getCoordinates().second << std::endl;
-            std::vector<std::pair<int,int>> moves = posPiecePairBlacks.second->getMoves(this);
-            for (auto move : moves) {
-                std::cout << move.first << "," << move.second << std::endl;
-            }
-            for (int i = 0; i < moves.size(); i++) {
-                if (moves.at(i).first == destPos.first && moves.at(i).second == destPos.second) {
-                    return true;
-                }
+        for (int i = 0; i < this->actualPosOfBlackPieces.at(currentPos)->getMoves(this).size(); i++) {
+            if (this->actualPosOfBlackPieces.at(currentPos)->getMoves(this).at(i) == destPos) {
+                return true;
             }
         }
+        
     }
     return false;
 }
 
-bool Board::isCapturingMove(std::pair<int, int> destPos, Side currentSide) {
+bool Board::isCapturingMove(std::pair<int, int> currentPos, std::pair<int, int> destPos, Side currentSide) {
     if (currentSide == Side::White) {
         for (const auto& posPiecePairBlacks : this->actualPosOfBlackPieces) {
             if (posPiecePairBlacks.first == destPos) {
-                return this->isValidDestPos(destPos, currentSide);
+                return this->isValidDestPos(currentPos, destPos, currentSide);
             }
         }
     }
     else if (currentSide == Side::Black) {
         for (const auto& posPiecePairWhites : this->actualPosOfWhitePieces) {
             if (posPiecePairWhites.first == destPos) {
-                return this->isValidDestPos(destPos, currentSide);
+                return this->isValidDestPos(currentPos, destPos, currentSide);
             }
         }
     }
@@ -926,22 +914,22 @@ void Board::captureMove(std::pair<int, int> currentPos, std::pair<int, int> dest
         this->actualPosOfBlackPieces.erase(destPos);
         // Create the same friendly piece at destPos (movement finished)
         if (typeOfPieceAtCurrentPos == Piecetype::Rook) {
-            this->actualPosOfWhitePieces.emplace(destPos, new Rook(destPos, Side::White));
+            this->actualPosOfWhitePieces.emplace(destPos, new Rook(destPos, true, Side::White));
         }
         else if (typeOfPieceAtCurrentPos == Piecetype::Knight) {
-            this->actualPosOfWhitePieces.emplace(destPos, new Knight(destPos, Side::White));
+            this->actualPosOfWhitePieces.emplace(destPos, new Knight(destPos, true, Side::White));
         }
         else if (typeOfPieceAtCurrentPos == Piecetype::Bishop) {
-            this->actualPosOfWhitePieces.emplace(destPos, new Bishop(destPos, Side::White));
+            this->actualPosOfWhitePieces.emplace(destPos, new Bishop(destPos, true, Side::White));
         }
         else if (typeOfPieceAtCurrentPos == Piecetype::King) {
-            this->actualPosOfWhitePieces.emplace(destPos, new King(destPos, Side::White));
+            this->actualPosOfWhitePieces.emplace(destPos, new King(destPos, true, Side::White));
         }
         else if (typeOfPieceAtCurrentPos == Piecetype::Queen) {
-            this->actualPosOfWhitePieces.emplace(destPos, new Queen(destPos, Side::White));
+            this->actualPosOfWhitePieces.emplace(destPos, new Queen(destPos, true, Side::White));
         }
         else if (typeOfPieceAtCurrentPos == Piecetype::Pawn) {
-            this->actualPosOfWhitePieces.emplace(destPos, new Pawn(destPos, Side::White));
+            this->actualPosOfWhitePieces.emplace(destPos, new Pawn(destPos, true, Side::White));
         }
     }
     else if (currentSide == Side::Black) {
@@ -959,22 +947,22 @@ void Board::captureMove(std::pair<int, int> currentPos, std::pair<int, int> dest
         this->actualPosOfWhitePieces.erase(destPos);
         // Create the same friendly piece at destPos (movement finished)
         if (typeOfPieceAtCurrentPos == Piecetype::Rook) {
-            this->actualPosOfBlackPieces.emplace(destPos, new Rook(destPos, Side::Black));
+            this->actualPosOfBlackPieces.emplace(destPos, new Rook(destPos, true, Side::Black));
         }
         else if (typeOfPieceAtCurrentPos == Piecetype::Knight) {
-            this->actualPosOfBlackPieces.emplace(destPos, new Knight(destPos, Side::Black));
+            this->actualPosOfBlackPieces.emplace(destPos, new Knight(destPos, true, Side::Black));
         }
         else if (typeOfPieceAtCurrentPos == Piecetype::Bishop) {
-            this->actualPosOfBlackPieces.emplace(destPos, new Bishop(destPos, Side::Black));
+            this->actualPosOfBlackPieces.emplace(destPos, new Bishop(destPos, true, Side::Black));
         }
         else if (typeOfPieceAtCurrentPos == Piecetype::King) {
-            this->actualPosOfBlackPieces.emplace(destPos, new King(destPos, Side::Black));
+            this->actualPosOfBlackPieces.emplace(destPos, new King(destPos, true, Side::Black));
         }
         else if (typeOfPieceAtCurrentPos == Piecetype::Queen) {
-            this->actualPosOfBlackPieces.emplace(destPos, new Queen(destPos, Side::Black));
+            this->actualPosOfBlackPieces.emplace(destPos, new Queen(destPos, true, Side::Black));
         }
         else if (typeOfPieceAtCurrentPos == Piecetype::Pawn) {
-            this->actualPosOfBlackPieces.emplace(destPos, new Pawn(destPos, Side::Black));
+            this->actualPosOfBlackPieces.emplace(destPos, new Pawn(destPos, true, Side::Black));
         }
     }
 }
@@ -991,22 +979,22 @@ void Board::emptyMove(std::pair<int, int> currentPos, std::pair<int, int> destPo
         this->actualPosOfWhitePieces.erase(currentPos);
         // Create the same friendly piece at destPos (movement finished)
         if (typeOfPieceAtCurrentPos == Piecetype::Rook) {
-            this->actualPosOfWhitePieces.emplace(destPos, new Rook(destPos, Side::White));
+            this->actualPosOfWhitePieces.emplace(destPos, new Rook(destPos, true, Side::White));
         }
         else if (typeOfPieceAtCurrentPos == Piecetype::Knight) {
-            this->actualPosOfWhitePieces.emplace(destPos, new Knight(destPos, Side::White));
+            this->actualPosOfWhitePieces.emplace(destPos, new Knight(destPos, true, Side::White));
         }
         else if (typeOfPieceAtCurrentPos == Piecetype::Bishop) {
-            this->actualPosOfWhitePieces.emplace(destPos, new Bishop(destPos, Side::White));
+            this->actualPosOfWhitePieces.emplace(destPos, new Bishop(destPos, true, Side::White));
         }
         else if (typeOfPieceAtCurrentPos == Piecetype::King) {
-            this->actualPosOfWhitePieces.emplace(destPos, new King(destPos, Side::White));
+            this->actualPosOfWhitePieces.emplace(destPos, new King(destPos, true, Side::White));
         }
         else if (typeOfPieceAtCurrentPos == Piecetype::Queen) {
-            this->actualPosOfWhitePieces.emplace(destPos, new Queen(destPos, Side::White));
+            this->actualPosOfWhitePieces.emplace(destPos, new Queen(destPos, true, Side::White));
         }
         else if (typeOfPieceAtCurrentPos == Piecetype::Pawn) {
-            this->actualPosOfWhitePieces.emplace(destPos, new Pawn(destPos, Side::White));
+            this->actualPosOfWhitePieces.emplace(destPos, new Pawn(destPos, true, Side::White));
         }
     }
     else if (currentSide == Side::Black) {
@@ -1020,22 +1008,22 @@ void Board::emptyMove(std::pair<int, int> currentPos, std::pair<int, int> destPo
         this->actualPosOfBlackPieces.erase(currentPos);
         // Create the same friendly piece at destPos (movement finished)
         if (typeOfPieceAtCurrentPos == Piecetype::Rook) {
-            this->actualPosOfBlackPieces.emplace(destPos, new Rook(destPos, Side::Black));
+            this->actualPosOfBlackPieces.emplace(destPos, new Rook(destPos, true, Side::Black));
         }
         else if (typeOfPieceAtCurrentPos == Piecetype::Knight) {
-            this->actualPosOfBlackPieces.emplace(destPos, new Knight(destPos, Side::Black));
+            this->actualPosOfBlackPieces.emplace(destPos, new Knight(destPos, true, Side::Black));
         }
         else if (typeOfPieceAtCurrentPos == Piecetype::Bishop) {
-            this->actualPosOfBlackPieces.emplace(destPos, new Bishop(destPos, Side::Black));
+            this->actualPosOfBlackPieces.emplace(destPos, new Bishop(destPos, true, Side::Black));
         }
         else if (typeOfPieceAtCurrentPos == Piecetype::King) {
-            this->actualPosOfBlackPieces.emplace(destPos, new King(destPos, Side::Black));
+            this->actualPosOfBlackPieces.emplace(destPos, new King(destPos, true, Side::Black));
         }
         else if (typeOfPieceAtCurrentPos == Piecetype::Queen) {
-            this->actualPosOfBlackPieces.emplace(destPos, new Queen(destPos, Side::Black));
+            this->actualPosOfBlackPieces.emplace(destPos, new Queen(destPos, true, Side::Black));
         }
         else if (typeOfPieceAtCurrentPos == Piecetype::Pawn) {
-            this->actualPosOfBlackPieces.emplace(destPos, new Pawn(destPos, Side::Black));
+            this->actualPosOfBlackPieces.emplace(destPos, new Pawn(destPos, true, Side::Black));
         }
     }
 }
@@ -1111,7 +1099,7 @@ bool Board::canPieceMoveToDestPos(std::pair<int, int> currentPos, std::pair<int,
     std::cout << "one" << std::endl;
     if (currentSide == Side::White) {
       std::cout << "White side has moves left" << std::endl;
-        this->whiteSideNoMoves = this->doesSideHaveMovesLeft(currentSide);
+        this->whiteSideNoMoves = !(this->doesSideHaveMovesLeft(currentSide));
         if (this->blackSideNoMoves && this->whiteSideNoMoves) {
             this->currentBoardStatus = BoardStatus::Stalemate;
             std::cout << "StalemateWhitesTurn" << std::endl;
@@ -1120,7 +1108,7 @@ bool Board::canPieceMoveToDestPos(std::pair<int, int> currentPos, std::pair<int,
     }
     else if (currentSide == Side::Black) {
       std::cout << "Black side has moves left" << std::endl;
-        this->blackSideNoMoves = this->doesSideHaveMovesLeft(currentSide);
+        this->blackSideNoMoves = !(this->doesSideHaveMovesLeft(currentSide));
         if (this->whiteSideNoMoves && this->blackSideNoMoves) {
             this->currentBoardStatus = BoardStatus::Stalemate;
             std::cout << "StalemateBlacksTurn" << std::endl;
@@ -1138,7 +1126,7 @@ bool Board::canPieceMoveToDestPos(std::pair<int, int> currentPos, std::pair<int,
       return false;
     }
     // Check if the destPos of the move is valid
-    if (!this->isValidDestPos(destPos, currentSide)) {
+    if (!this->isValidDestPos(currentPos, destPos, currentSide)) {
       std::cout << "Not Valid destPos" << std::endl;
       return false;
     }
@@ -1152,7 +1140,7 @@ bool Board::canPieceMoveToDestPos(std::pair<int, int> currentPos, std::pair<int,
     }
     // If the move is valid and we indeed do not render the white king in check, then we can go ahead
     // and check if we are simply moving to an empty piece or capturing a black piece.
-    if (this->isCapturingMove(destPos, currentSide)) {
+    if (this->isCapturingMove(currentPos, destPos, currentSide)) {
         // If we are capturing an enemy piece, delete the piece being attacked remove from appropriate map
         // and place the attacking friendly piece in the position the enemy piece was in.
         // We can also check for en passant at this point if a pawn is making the move.
